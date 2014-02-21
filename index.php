@@ -108,7 +108,7 @@ $frontendDisplayClass->setPageTitle('ascii art');
 $frontendDisplayClass->setPageDescription('a dynamically generated ascii art image using php, the gd graphics libarary, html &amp; css.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent('<pre>' . $final_ascii . '</pre>');
-// $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
+$frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.55, maximum-scale=2, minimum-scale=0.55, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
 $frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();
