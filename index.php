@@ -20,6 +20,20 @@ require_once 'lib/frontendDisplay.class.php';
 require_once('lib/asciiart.class.php');
 
 //**************************************************************************************//
+// Define the valid arrays.
+
+$VALID_CONTROLLERS = array('portfolio');
+$DISPLAY_CONTROLLERS = array('portfolio');
+$VALID_GET_PARAMETERS = array('_debug', 'portfolio');
+$VALID_CONTENT_TYPES = array('application/json','text/plain','text/html');
+$VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
+
+//**************************************************************************************//
+// Set config options.
+
+$DEBUG_OUTPUT_JSON = false;
+
+//**************************************************************************************//
 // Set the image directory.
 
 $image_dir = 'images/';
@@ -74,8 +88,24 @@ $asciiArtClass->set_block_size_x_compensation(2);
 $ascii_art_array = $asciiArtClass->generate_ascii_art();
 
 //**************************************************************************************//
-// Output the final ASCII
-header('Content-Type: text/plain; charset=utf-8');
+// Process the ASCII art array.
+
+$final_ascii_art_array = array();
 foreach($ascii_art_array as $ascii_art_row) {
-  echo implode('', $ascii_art_row) . PHP_EOL;
+  $final_ascii_art_array[] = htmlentities(implode('', $ascii_art_row));
 }
+$final_ascii = implode('<br />', $final_ascii_art_array);
+
+//**************************************************************************************//
+// Init the "frontendDisplay()" class.
+
+$frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
+$frontendDisplayClass->setViewMode('mega');
+$frontendDisplayClass->setPageTitle('ascii art');
+$frontendDisplayClass->setPageDescription('a dynamically generated ascii art image using php, the gd graphics libarary, html &amp; css.');
+// $frontendDisplayClass->setPageContentMarkdown('index.md');
+$frontendDisplayClass->setPageContent('<pre>' . $final_ascii . '</pre>');
+$frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
+$frontendDisplayClass->setPageRobots('noindex, nofollow');
+$frontendDisplayClass->setJavascripts(array('script/common.js'));
+$frontendDisplayClass->initContent();
