@@ -88,8 +88,4 @@ ul, li
 	width: 10px;
 	font-size: 0;
 	line-height: 0;
-	/* background-image: url('brick.png'); */
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGZJREFUeNp8jwEKwDAIAzVz3f9f3HUSIZN1wtGWJlHdzJw8dZBzMRYXzwH7rinkG5LmPwaLBUTomw4enMlEDPK6B1O7MGSxFAc3m619bV6GFI42D/hZ3dJQiV0IEWbqLhEyY3ILMAC+wAfRv/+3UQAAAABJRU5ErkJggg==');
-	background-position: center center;
-	background-repeat: no-repeat;
 }
