@@ -64,6 +64,19 @@ ul, li
 .Core { }
 .Core .Padding { padding: 0; }
 
+.Core pre
+{
+	white-space: pre-wrap;
+	font-size: 100%;
+	font-weight: normal;
+	line-height: 1.2em;
+	border-radius: 10px;
+	color: #0d0;
+	background-color: #333;
+	padding: 20px 20px 20px 20px;
+	margin: 0 0 10px 0;
+}
+
 /**************************************************************************************************/
 .Core .Grid .Padding { padding: 6px 3px 0 3px; }
 
