@@ -81,7 +81,7 @@ $block_size = 6;
 
 $asciiArtClass = new asciiArtClass();
 $asciiArtClass->set_image($image_file);
-$asciiArtClass->set_character_sets(TRUE);
+$asciiArtClass->set_character_sets(TRUE, TRUE);
 $asciiArtClass->set_block_size_x($block_size);
 $asciiArtClass->set_block_size_y($block_size);
 $asciiArtClass->set_block_size_x_compensation(2);
@@ -91,8 +91,11 @@ $ascii_art_array = $asciiArtClass->generate_ascii_art();
 // Process the ASCII art array.
 
 $final_ascii_art_array = array();
+$raw_row = '';
 foreach($ascii_art_array as $ascii_art_row) {
-  $final_ascii_art_array[] = htmlentities(implode('', $ascii_art_row));
+  $raw_row = htmlentities(implode('', $ascii_art_row));
+  // $final_ascii_art_array[] = sprintf('<nowrap>%s</nowrap>', $raw_row);
+  $final_ascii_art_array[] = $raw_row;
 }
 $final_ascii = implode('<br />', $final_ascii_art_array);
 

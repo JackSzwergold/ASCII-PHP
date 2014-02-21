@@ -48,6 +48,7 @@ class asciiArtClass {
   private $character_set = NULL;
   private $character_set_count = 0;
   private $character_set_shuffle = FALSE;
+  private $character_set_reverse = FALSE;
 
   public function __construct() {
   } // __construct
@@ -92,11 +93,16 @@ class asciiArtClass {
 
 
   // Generate the pixel boxes.
-  function set_character_sets ($character_set_shuffle = FALSE) {
+  function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
 
     // Set the character set shuffle value.
     if (!empty($character_set_shuffle)) {
       $this->character_set_shuffle = $character_set_shuffle;
+    }
+
+    // Set the character set reverse value.
+    if (!empty($character_set_reverse)) {
+      $this->character_set_reverse = $character_set_reverse;
     }
 
     // Long character grayscale character sets.
@@ -120,6 +126,10 @@ class asciiArtClass {
     }
     else {
       $this->character_set = $character_sets_short[3];
+    }
+
+    if ($this->character_set_reverse) {
+      $this->character_set = array_reverse($this->character_set);
     }
 
     $this->character_set_count = count($this->character_set);
