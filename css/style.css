@@ -58,7 +58,7 @@ ul, li
 .tinyView .Wrapper { width: 510px; }
 .smallView .Wrapper { width: 714px; }
 .largeView .Wrapper { width: 472px; }
-.megaView .Wrapper { width: 732px; }
+.megaView .Wrapper { width: 780px; }
 
 /**************************************************************************************************/
 .Core { }
@@ -66,7 +66,6 @@ ul, li
 
 .Core pre
 {
-
 	font-size: 100%;
 	font-weight: normal;
 	line-height: 1.2em;
