@@ -8,8 +8,16 @@
  * Created: 2014-02-19, js
  * Version: 2014-02-19, js: creation
  *          2014-02-19, js: development & cleanup
+ *          2014-02-20, js: refactoring into a real class.
  *
  */
+
+//**************************************************************************************//
+// Require the basic configuration settings & functions.
+
+require_once('common/functions.inc.php');
+require_once 'lib/frontendDisplay.class.php';
+require_once('lib/asciiart.class.php');
 
 //**************************************************************************************//
 // Set the image directory.
@@ -49,98 +57,23 @@ shuffle($raw_image_files);
 
 $image_files = array_slice($raw_image_files, 0, 1);
 
-$file = $image_files[0];
-
-// Set the image source.
-$image_source = imagecreatefromjpeg($file);
+$image_file = $image_files[0];
 
 //**************************************************************************************//
-// Character set grayscales.
+// Instantialize the 'asciiArtClass()'.
 
-// Long character grayscale character sets.
-$character_sets_long = array();
-$character_sets_long[] = str_split("\$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ");
-$character_sets_long[] = str_split("@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz\$CIu23Jcfry%1v7l+it[] {}?j|()=~!-/<>\"^_';,:`. ");
-$character_sets_long[] = str_split("@#\$%&8BMW*mwqpdbkhaoQ0OZXYUJCLtfjzxnuvcr[]{}1()|/?Il!i><+_~-;,. ");
+// $block_size = intval(rand(10, 20));
+$block_size = 6;
 
-// Short character grayscale character sets.
-$character_sets_short = array();
-$character_sets_short[] = str_split("#%$*|:.' ");
-$character_sets_short[] = str_split("@%#*+=-:. ");
-$character_sets_short[] = str_split("@#8&o:*. ");
-$character_sets_short[] = str_split("#*+. ");
-
-$character_sets = array_merge($character_sets_short, $character_sets_long);
-
-if (FALSE) {
-  shuffle($character_sets);
-  $characters = $character_sets[0];
-}
-else {
-  $characters = $character_sets_short[3];
-}
-
-$character_count = count($characters);
+$asciiArtClass = new asciiArtClass();
+$asciiArtClass->set_image($image_file);
+$asciiArtClass->set_character_sets(TRUE);
+$asciiArtClass->set_block_size_x($block_size);
+$asciiArtClass->set_block_size_y($block_size);
+$asciiArtClass->set_block_size_x_compensation(2);
+$ascii_art_array = $asciiArtClass->generate_ascii_art();
 
 //**************************************************************************************//
-// Here is where the fun begins.
-
-// Set the block size.
-$block_size_x_compensation = 2;
-$block_size_x = $block_size_y = 4;
-$block_size_x = $block_size_x / $block_size_x_compensation;
-
-// Get the image dimensions.
-$width_resampled = imagesx($image_source) / $block_size_x;
-$height_resampled = imagesy($image_source) / $block_size_y;
-
-// Saturation info.
-$saturation_value = 255;
-$saturation_multiplier = 3;
-$saturation_decimal_places = 4;
-
-// Init the ASCII art array.
-$ascii_art_array = array();
-
-// Box X & Y values.
-$box_x = $box_y = 0;
-
-for ($position_y = 0; $position_y < $height_resampled; $position_y += 1) {
-
-  // Init the ASCII art row.
-  $ascii_art_row = array();
-
-  // Calculate the box Y position.
-  $box_y = ($position_y * $block_size_y);
-
-  for ($position_x = 0; $position_x < $width_resampled; $position_x += 1) {
-    
-    // Calculate the box X position.
-    $box_x = ($position_x * $block_size_x);
-
-    // Get the color index.
-    $color_index = @imagecolorat($image_source, $box_x, $box_y);
-    $rgb_array = imagecolorsforindex($image_source, $color_index);
-
-    // Calculate saturation.
-    $rgb_sat = array();
-    $rgb_sat['red'] = ($rgb_array['red'] / ($saturation_value * $saturation_multiplier));
-    $rgb_sat['green'] = ($rgb_array['green'] / ($saturation_value * $saturation_multiplier));
-    $rgb_sat['blue'] = ($rgb_array['blue'] / ($saturation_value * $saturation_multiplier));
-    $saturation = round(array_sum($rgb_sat), $saturation_decimal_places) .  PHP_EOL;
-
-    // Get the character key.
-    $character_key = intval($saturation * ($character_count - 1));
-
-    // Setting the ASCII art row.
-    $ascii_art_row[] = $characters[$character_key];
-
-  }
-
-  $ascii_art_array[] = $ascii_art_row;
-
-}
-
 // Output the final ASCII
 header('Content-Type: text/plain; charset=utf-8');
 foreach($ascii_art_array as $ascii_art_row) {
