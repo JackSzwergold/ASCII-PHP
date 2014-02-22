@@ -76,6 +76,17 @@ ul, li
 	margin: 0 0 10px 0;
 }
 
+.Core pre span
+{
+	position: relative;
+	float: left;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	width: 0.6em;
+	height: 0.6em;
+}
+
 /**************************************************************************************************/
 .Core .Grid .Padding { padding: 6px 3px 0 3px; }
 
