@@ -66,6 +66,7 @@ ul, li
 
 .Core pre
 {
+	font-family: "Courier New", Courier, monospace;
 	font-size: 100%;
 	font-weight: normal;
 	line-height: 1.2em;
@@ -82,8 +83,8 @@ ul, li
 	float: left;
 	vertical-align: middle padding: 0;
 	margin: 0;
-	width: 0.6em;
-	height: 1.2em;
+	width: 7px;
+	height: 14px;
 	background-color: transparent;
 }
 
