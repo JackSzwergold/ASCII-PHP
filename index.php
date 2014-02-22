@@ -41,32 +41,27 @@ $mode_options = array();
 
 $mode_options['micro']['width'] = 6;
 $mode_options['micro']['height'] = 6;
-$mode_options['micro']['block_size_x'] = 10;
-$mode_options['micro']['block_size_y'] = 10;
+$mode_options['micro']['block_size'] = 10;
 $mode_options['micro']['how_many'] = 25;
 
 $mode_options['tiny']['width'] = 12;
 $mode_options['tiny']['height'] = 12;
-$mode_options['tiny']['block_size_x'] = 10;
-$mode_options['tiny']['block_size_y'] = 10;
+$mode_options['tiny']['block_size'] = 10;
 $mode_options['tiny']['how_many'] = 16;
 
 $mode_options['small']['width'] = 23;
 $mode_options['small']['height'] = 23;
 $mode_options['small']['block_size_x'] = 10;
-$mode_options['small']['block_size_y'] = 10;
 $mode_options['small']['how_many'] = 9;
 
 $mode_options['large']['width'] = 46;
 $mode_options['large']['height'] = 46;
-$mode_options['large']['block_size_x'] = 10;
-$mode_options['large']['block_size_y'] = 10;
+$mode_options['large']['block_size'] = 10;
 $mode_options['large']['how_many'] = 1;
 
 $mode_options['mega']['width'] = 72;
 $mode_options['mega']['height'] = 72;
-$mode_options['mega']['block_size_x'] = 6;
-$mode_options['mega']['block_size_y'] = 6;
+$mode_options['mega']['block_size'] = 6;
 $mode_options['mega']['how_many'] = 1;
 
 //**************************************************************************************//
@@ -129,12 +124,14 @@ $block_size = 6;
 $block_size = 10;
 
 $asciiArtClass = new asciiArtClass();
-$asciiArtClass->set_image($image_file);
+$asciiArtClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+$asciiArtClass->debug_mode(FALSE);
+$asciiArtClass->flip_horizontal(FALSE);
 $asciiArtClass->set_character_sets(TRUE, TRUE);
-$asciiArtClass->set_block_size_x($mode_options[$mode]['block_size_x']);
-$asciiArtClass->set_block_size_y($mode_options[$mode]['block_size_y']);
 $asciiArtClass->set_block_size_x_compensation(2);
+// $ascii_art_array = $asciiArtClass->process_image();
 $ascii_art_array = $asciiArtClass->generate_ascii_art();
+
 
 //**************************************************************************************//
 // Process the ASCII art array.

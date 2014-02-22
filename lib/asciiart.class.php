@@ -62,27 +62,22 @@ class asciiArtClass {
   } // debug_mode
 
 
-  public function set_image($image_file) {
-    if (!empty($image_file)) {
-      $this->image_file = $image_file;
+  public function flip_horizontal($flip_horizontal) {
+    if (version_compare(phpversion(), $this->php_version_imageflip, '>')) {
+      $this->flip_horizontal = $flip_horizontal;
     }
+  } // flip_horizontal
+
+
+  public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
+
+    $this->image_file = $image_file;
+    $this->width_resampled = $width_resampled;
+    $this->height_resampled = $height_resampled;
+    $this->block_size_x = $block_size;
+    $this->block_size_y = $block_size;
+
   } // set_image
-
-
-  // Set the block x size.
-  function set_block_size_x ($block_size_x = null) {
-    if (!empty($block_size_x)) {
-      $this->block_size_x = $block_size_x;
-    }
-  } // set_block_size_x
-
-
-  // Set the block y size.
-  function set_block_size_y ($block_size_y = null) {
-    if (!empty($block_size_y)) {
-      $this->block_size_y = $block_size_y;
-    }
-  } // set_block_size_y
 
 
   // Set the block x size compensation.
@@ -176,18 +171,8 @@ class asciiArtClass {
         $color_index = @imagecolorat($image_source, $box_x, $box_y);
         $rgb_array = imagecolorsforindex($image_source, $color_index);
 
-        // Calculate saturation.
-        $rgb_sat = array();
-        $rgb_sat['red'] = ($rgb_array['red'] / ($this->saturation_value * $this->saturation_multiplier));
-        $rgb_sat['green'] = ($rgb_array['green'] / ($this->saturation_value * $this->saturation_multiplier));
-        $rgb_sat['blue'] = ($rgb_array['blue'] / ($this->saturation_value * $this->saturation_multiplier));
-        $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places) . PHP_EOL;
-
-        // Get the character key.
-        $character_key = intval($saturation * ($this->character_set_count - 1));
-
         // Setting the ASCII art row.
-        $ascii_art_row[] = $this->character_set[$character_key];
+        $ascii_art_row[] = $this->generate_ascii_art_boxes($rgb_array);
 
       }
 
@@ -199,6 +184,26 @@ class asciiArtClass {
 
   } // generate_ascii_art
 
+
+  // Generate the pixel boxes.
+  function generate_ascii_art_boxes ($rgb_array) {
+
+    // Calculate saturation.
+    $rgb_sat = array();
+    $rgb_sat['red'] = ($rgb_array['red'] / ($this->saturation_value * $this->saturation_multiplier));
+    $rgb_sat['green'] = ($rgb_array['green'] / ($this->saturation_value * $this->saturation_multiplier));
+    $rgb_sat['blue'] = ($rgb_array['blue'] / ($this->saturation_value * $this->saturation_multiplier));
+    $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places) . PHP_EOL;
+
+    // Get the character key.
+    $character_key = intval($saturation * ($this->character_set_count - 1));
+
+    // Setting the ASCII art row.
+    $ret = $this->character_set[$character_key];
+
+    return $ret;
+
+  } // generate_ascii_art_boxes
 
 
 
