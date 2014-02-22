@@ -78,13 +78,13 @@ ul, li
 
 .Core pre span
 {
-	position: relative;
+	display: table-cell;
 	float: left;
-	display: inline;
-	padding: 0;
+	vertical-align: middle padding: 0;
 	margin: 0;
 	width: 0.6em;
-	height: 0.6em;
+	height: 1.2em;
+	background-color: transparent;
 }
 
 /**************************************************************************************************/
