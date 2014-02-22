@@ -39,18 +39,18 @@ $DEBUG_OUTPUT_JSON = false;
 
 $mode_options = array();
 
-$mode_options['micro']['width'] = 46;
-$mode_options['micro']['height'] = 46;
+$mode_options['micro']['width'] = 20;
+$mode_options['micro']['height'] = 20;
 $mode_options['micro']['block_size'] = 10;
 $mode_options['micro']['how_many'] = 1;
 
-$mode_options['tiny']['width'] = 60;
-$mode_options['tiny']['height'] = 60;
+$mode_options['tiny']['width'] = 40;
+$mode_options['tiny']['height'] = 40;
 $mode_options['tiny']['block_size'] = 10;
 $mode_options['tiny']['how_many'] = 1;
 
-$mode_options['small']['width'] = 72;
-$mode_options['small']['height'] = 72;
+$mode_options['small']['width'] = 60;
+$mode_options['small']['height'] = 60;
 $mode_options['small']['block_size'] = 10;
 $mode_options['small']['how_many'] = 1;
 
