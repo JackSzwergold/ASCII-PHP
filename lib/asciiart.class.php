@@ -27,11 +27,6 @@ class asciiArtClass {
 
   private $block_size_x = 10;
   private $block_size_y = 10;
-  private $block_size_x_compensation = 2;
-
-  private $saturation_value = 255;
-  private $saturation_multiplier = 3;
-  private $saturation_decimal_places = 4;
 
   private $overlay_tile = 'css/brick.png';
 
@@ -50,6 +45,12 @@ class asciiArtClass {
   private $character_set_count = 0;
   private $character_set_shuffle = FALSE;
   private $character_set_reverse = FALSE;
+
+  private $block_size_x_compensation = 2;
+
+  private $saturation_value = 255;
+  private $saturation_multiplier = 3;
+  private $saturation_decimal_places = 4;
 
   public function __construct() {
   } // __construct
@@ -84,6 +85,7 @@ class asciiArtClass {
   function set_block_size_x_compensation ($block_size_x_compensation = null) {
     if (!empty($block_size_x_compensation)) {
       $this->block_size_x_compensation = $block_size_x_compensation;
+      $this->height_resampled = $this->height_resampled / $this->block_size_x_compensation;
     }
   } // set_block_size_x_compensation
 
@@ -133,59 +135,7 @@ class asciiArtClass {
   } // set_character_sets
 
 
-  // Generate the ascii art.
-  function generate_ascii_art () {
-
-    // Set the image source.
-    $image_source = imagecreatefromjpeg($this->image_file);
-
-    // Set the block size.
-    $block_size_x = $this->block_size_x;
-    $block_size_y = $this->block_size_y;
-    $block_size_x = $block_size_x / $this->block_size_x_compensation;
-
-    // Get the image dimensions.
-    $width_resampled = imagesx($image_source) / $block_size_x;
-    $height_resampled = imagesy($image_source) / $block_size_y;
-
-    // Init the ASCII art array.
-    $ascii_art_array = array();
-
-    // Box X & Y values.
-    $box_x = $box_y = 0;
-
-    for ($position_y = 0; $position_y < $height_resampled; $position_y += 1) {
-
-      // Init the ASCII art row.
-      $ascii_art_row = array();
-
-      // Calculate the box Y position.
-      $box_y = ($position_y * $block_size_y);
-
-      for ($position_x = 0; $position_x < $width_resampled; $position_x += 1) {
-
-        // Calculate the box X position.
-        $box_x = ($position_x * $block_size_x);
-
-        // Get the color index.
-        $color_index = @imagecolorat($image_source, $box_x, $box_y);
-        $rgb_array = imagecolorsforindex($image_source, $color_index);
-
-        // Setting the ASCII art row.
-        $ascii_art_row[] = $this->generate_ascii_art_boxes($rgb_array);
-
-      }
-
-      $ascii_art_array[] = $ascii_art_row;
-
-    }
-
-    return $ascii_art_array;
-
-  } // generate_ascii_art
-
-
-  // Generate the pixel boxes.
+  // Generate the ascii art boxes.
   function generate_ascii_art_boxes ($rgb_array) {
 
     // Calculate saturation.
@@ -204,6 +154,14 @@ class asciiArtClass {
     return $ret;
 
   } // generate_ascii_art_boxes
+
+
+
+
+
+
+
+
 
 
 
@@ -278,13 +236,16 @@ class asciiArtClass {
         $pixel_row = array_reverse($pixel_row);
       }
       foreach ($pixel_row as $pixel) {
-        $blocks[] = $this->generate_pixel_boxes($pixel);
+        // $blocks[] = $this->generate_pixel_boxes($pixel);
+        $blocks[] = htmlentities($this->generate_ascii_art_boxes($pixel));
       }
+      $blocks[] = '<br />';
     }
 
     $ret = '';
     if (!empty($blocks)) {
-      $ret = $this->render_pixel_box_container($blocks);
+      // $ret = $this->render_pixel_box_container($blocks);
+      $ret =  implode('', $blocks);
     }
 
     return $ret;
