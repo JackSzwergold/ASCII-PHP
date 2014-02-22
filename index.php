@@ -65,8 +65,8 @@ $mode_options['large']['how_many'] = 1;
 
 $mode_options['mega']['width'] = 72;
 $mode_options['mega']['height'] = 72;
-$mode_options['mega']['block_size_x'] = 10;
-$mode_options['mega']['block_size_y'] = 10;
+$mode_options['mega']['block_size_x'] = 6;
+$mode_options['mega']['block_size_y'] = 6;
 $mode_options['mega']['how_many'] = 1;
 
 //**************************************************************************************//
@@ -78,7 +78,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'large';
+  $mode = 'mega';
 }
 
 //**************************************************************************************//
@@ -159,5 +159,5 @@ $frontendDisplayClass->setPageDescription('a dynamically generated ascii art ima
 $frontendDisplayClass->setPageContent('<pre>' . $final_ascii . '</pre>');
 // $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
-$frontendDisplayClass->setJavascripts(array('script/common.js'));
+// $frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();
