@@ -159,5 +159,5 @@ $frontendDisplayClass->setPageDescription('a dynamically generated ascii art ima
 $frontendDisplayClass->setPageContent('<pre>' . $final_ascii . '</pre>');
 // $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
-// $frontendDisplayClass->setJavascripts(array('script/common.js'));
+$frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();
