@@ -9,6 +9,7 @@
  * Version: 2014-02-19, js: creation
  *          2014-02-19, js: development & cleanup
  *          2014-02-20, js: refactoring into a real class.
+ *          2014-02-21, js: adding more options for flexibilty.
  *
  */
 
