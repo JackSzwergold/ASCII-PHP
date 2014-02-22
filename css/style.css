@@ -54,11 +54,11 @@ ul, li
 	clear: both;
 }
 
-.microView .Wrapper { width: 382px; }
-.tinyView .Wrapper { width: 466px; }
-.smallView .Wrapper { width: 562px; }
-.largeView .Wrapper { width: 622px; }
-.megaView .Wrapper { width: 992px; }
+.microView .Wrapper { width: 186px; }
+.tinyView .Wrapper { width: 326px; }
+.smallView .Wrapper { width: 466px; }
+.largeView .Wrapper { width: 606px; }
+.megaView .Wrapper { width: 970px; }
 
 /**************************************************************************************************/
 .Core { }
@@ -78,13 +78,13 @@ ul, li
 
 .Core pre span
 {
-	position: relative;
+	display: table-cell;
 	float: left;
-	display: inline;
-	padding: 0;
+	vertical-align: middle padding: 0;
 	margin: 0;
 	width: 0.6em;
-	height: 0.6em;
+	height: 1.2em;
+	background-color: transparent;
 }
 
 /**************************************************************************************************/
