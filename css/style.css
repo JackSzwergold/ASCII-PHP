@@ -54,11 +54,11 @@ ul, li
 	clear: both;
 }
 
-.microView .Wrapper { width: 336px; }
-.tinyView .Wrapper { width: 510px; }
-.smallView .Wrapper { width: 714px; }
-.largeView .Wrapper { width: 472px; }
-.megaView .Wrapper { width: 780px; }
+.microView .Wrapper { width: 382px; }
+.tinyView .Wrapper { width: 466px; }
+.smallView .Wrapper { width: 562px; }
+.largeView .Wrapper { width: 622px; }
+.megaView .Wrapper { width: 992px; }
 
 /**************************************************************************************************/
 .Core { }
