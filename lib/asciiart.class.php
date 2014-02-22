@@ -69,7 +69,7 @@ class asciiArtClass {
   } // set_image
 
 
-  // Generate the pixel boxes.
+  // Set the block x size.
   function set_block_size_x ($block_size_x = null) {
     if (!empty($block_size_x)) {
       $this->block_size_x = $block_size_x;
