@@ -39,20 +39,20 @@ $DEBUG_OUTPUT_JSON = false;
 
 $mode_options = array();
 
-$mode_options['micro']['width'] = 23;
-$mode_options['micro']['height'] = 23;
+$mode_options['micro']['width'] = 46;
+$mode_options['micro']['height'] = 46;
 $mode_options['micro']['block_size'] = 10;
-$mode_options['micro']['how_many'] = 25;
+$mode_options['micro']['how_many'] = 1;
 
-$mode_options['tiny']['width'] = 46;
-$mode_options['tiny']['height'] = 46;
+$mode_options['tiny']['width'] = 60;
+$mode_options['tiny']['height'] = 60;
 $mode_options['tiny']['block_size'] = 10;
-$mode_options['tiny']['how_many'] = 16;
+$mode_options['tiny']['how_many'] = 1;
 
 $mode_options['small']['width'] = 72;
 $mode_options['small']['height'] = 72;
-$mode_options['small']['block_size_x'] = 10;
-$mode_options['small']['how_many'] = 9;
+$mode_options['small']['block_size'] = 10;
+$mode_options['small']['how_many'] = 1;
 
 $mode_options['large']['width'] = 80;
 $mode_options['large']['height'] = 80;
@@ -119,32 +119,13 @@ $image_file = $image_files[0];
 //**************************************************************************************//
 // Instantialize the 'asciiArtClass()'.
 
-// $block_size = intval(rand(10, 20));
-$block_size = 6;
-$block_size = 10;
-
 $asciiArtClass = new asciiArtClass();
 $asciiArtClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
 $asciiArtClass->debug_mode(FALSE);
 $asciiArtClass->flip_horizontal(FALSE);
 $asciiArtClass->set_character_sets(TRUE, TRUE);
-$asciiArtClass->set_block_size_x_compensation(2);
+$asciiArtClass->set_ascii_vertical_compensation(2);
 $final_ascii = $asciiArtClass->process_image();
-
-
-//**************************************************************************************//
-// Process the ASCII art array.
-
-if (FALSE) {
-  $final_ascii_art_array = array();
-  $raw_row = '';
-  foreach($ascii_art_array as $ascii_art_row) {
-    $raw_row = htmlentities(implode('', $ascii_art_row));
-    // $final_ascii_art_array[] = sprintf('<nowrap>%s</nowrap>', $raw_row);
-    $final_ascii_art_array[] = $raw_row;
-  }
-  $final_ascii = implode('<br />', $final_ascii_art_array);
-}
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
@@ -154,8 +135,8 @@ $frontendDisplayClass->setViewMode($mode);
 $frontendDisplayClass->setPageTitle('ascii art');
 $frontendDisplayClass->setPageDescription('a dynamically generated ascii art image using php, the gd graphics libarary, html &amp; css.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
-$frontendDisplayClass->setPageContent('<pre>' . $final_ascii . '</pre>');
+$frontendDisplayClass->setPageContent($final_ascii);
 // $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
-// $frontendDisplayClass->setJavascripts(array('script/common.js'));
+$frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();

@@ -46,7 +46,7 @@ class asciiArtClass {
   private $character_set_shuffle = FALSE;
   private $character_set_reverse = FALSE;
 
-  private $block_size_x_compensation = 2;
+  private $ascii_vertical_compensation = 2;
 
   private $saturation_value = 255;
   private $saturation_multiplier = 3;
@@ -81,16 +81,16 @@ class asciiArtClass {
   } // set_image
 
 
-  // Set the block x size compensation.
-  function set_block_size_x_compensation ($block_size_x_compensation = null) {
-    if (!empty($block_size_x_compensation)) {
-      $this->block_size_x_compensation = $block_size_x_compensation;
-      $this->height_resampled = $this->height_resampled / $this->block_size_x_compensation;
+  // Set the ascii vertical compensation.
+  function set_ascii_vertical_compensation ($ascii_vertical_compensation = null) {
+    if (!empty($ascii_vertical_compensation)) {
+      $this->ascii_vertical_compensation = $ascii_vertical_compensation;
+      $this->height_resampled = $this->height_resampled / $this->ascii_vertical_compensation;
     }
-  } // set_block_size_x_compensation
+  } // set_ascii_vertical_compensation
 
 
-  // Generate the pixel boxes.
+  // Set the character sets.
   function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
 
     // Set the character set shuffle value.
@@ -136,35 +136,30 @@ class asciiArtClass {
 
 
   // Generate the ascii art boxes.
-  function generate_ascii_art_boxes ($rgb_array) {
+  function generate_ascii_boxes ($rgb_array) {
+
+    // Check if the image actually exists.
+    if (empty($rgb_array)) {
+      return;
+    }
 
     // Calculate saturation.
     $rgb_sat = array();
     $rgb_sat['red'] = ($rgb_array['red'] / ($this->saturation_value * $this->saturation_multiplier));
     $rgb_sat['green'] = ($rgb_array['green'] / ($this->saturation_value * $this->saturation_multiplier));
     $rgb_sat['blue'] = ($rgb_array['blue'] / ($this->saturation_value * $this->saturation_multiplier));
-    $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places) . PHP_EOL;
+    $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places);
 
     // Get the character key.
     $character_key = intval($saturation * ($this->character_set_count - 1));
 
-    // Setting the ASCII art row.
-    $ret = $this->character_set[$character_key];
+    // Setting the ASCII art character.
+    // $ret = sprintf('<div>%s</div>', htmlentities($this->character_set[$character_key]));
+    $ret = sprintf('<span>%s</span>', htmlentities($this->character_set[$character_key]));
 
     return $ret;
 
-  } // generate_ascii_art_boxes
-
-
-
-
-
-
-
-
-
-
-
+  } // generate_ascii_boxes
 
   // Create the filename.
   function create_filename ($filename = '', $extension = '') {
@@ -221,9 +216,6 @@ class asciiArtClass {
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_array);
 
-      // Here only for reference. Pixelate the image by reloading.
-      // $this->pixelate_image_NO_LONGER_USED($image_processed);
-
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
@@ -237,7 +229,7 @@ class asciiArtClass {
       }
       foreach ($pixel_row as $pixel) {
         // $blocks[] = $this->generate_pixel_boxes($pixel);
-        $blocks[] = htmlentities($this->generate_ascii_art_boxes($pixel));
+        $blocks[] = $this->generate_ascii_boxes($pixel);
       }
       $blocks[] = '<br />';
     }
@@ -245,7 +237,7 @@ class asciiArtClass {
     $ret = '';
     if (!empty($blocks)) {
       // $ret = $this->render_pixel_box_container($blocks);
-      $ret =  implode('', $blocks);
+      $ret =  sprintf('<pre>%s</pre>', implode('', $blocks));
     }
 
     return $ret;
@@ -285,7 +277,7 @@ class asciiArtClass {
 
     return $ret;
 
-  } // process_image
+  } // cache_manager
 
 
   // Calculate the image ratio.
@@ -401,7 +393,7 @@ class asciiArtClass {
       imageconvolution($image_processed, $blur_matrix, 16, 0);
     }
 
-    if (TRUE) {
+    if (FALSE) {
       // Place a tiled overlay on the image.
       $tiled_overlay = imagecreatefrompng($this->overlay_tile);
       imagealphablending($image_processed, true);
@@ -411,94 +403,33 @@ class asciiArtClass {
     }
 
     // Save the images.
-    $image_filenames = array();
-    foreach ($this->image_types as $image_type) {
+    // Process the filename & generate the image files.
+    if (FALSE) {
+      $image_filenames = array();
+      foreach ($this->image_types as $image_type) {
 
-      // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
-      }
+        // If the cache directory doesn’t exist, create it.
+        if (!is_dir($this->cache_path[$image_type])) {
+          mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
+        }
 
-      // Process the filename & generate the image files.
-      $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && !file_exists($filename)) {
-        imagegif($image_processed, $filename, $this->image_quality['gif']);
-      }
-      else if ($image_type == 'jpeg' && !file_exists($filename)) {
-        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
-      }
-      else if ($image_type == 'png' && !file_exists($filename)) {
-        imagepng($image_processed, $filename, $this->image_quality['png']);
+        // Process the filename & generate the image files.
+        $filename = $this->create_filename($this->image_file, $image_type);
+        if ($image_type == 'gif' && !file_exists($filename)) {
+          imagegif($image_processed, $filename, $this->image_quality['gif']);
+        }
+        else if ($image_type == 'jpeg' && !file_exists($filename)) {
+          imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
+        }
+        else if ($image_type == 'png' && !file_exists($filename)) {
+          imagepng($image_processed, $filename, $this->image_quality['png']);
+        }
       }
     }
 
     imagedestroy($image_processed);
 
   } // pixelate_image_json
-
-
-  // Pixelate the image.
-  function pixelate_image_NO_LONGER_USED ($image_source) {
-
-    // Calculate the final width & final height
-    $width_pixelate = $this->width_resampled * $this->block_size_x;
-    $height_pixelate = $this->height_resampled * $this->block_size_y;
-
-    // Set the canvas for the processed image & resample the source image.
-    $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
-    imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
-    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resampled, $this->height_resampled);
-
-    // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
-    $box_x = $box_y = 0;
-    for ($position_y = 0; $position_y <= $this->height_resampled; $position_y += 1) {
-      $box_y = ($position_y * $this->block_size_y);
-      for ($position_x = 0; $position_x <= $this->width_resampled; $position_x += 1) {
-        $box_x = ($position_x * $this->block_size_x);
-        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $position_x, $position_y));
-        $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-      }  // width loop.
-    }  // height loop.
-
-    // Place a tiled overlay on the image.
-    if ($this->flip_horizontal) {
-      imageflip($image_processed, IMG_FLIP_HORIZONTAL);
-    }
-
-    // Place a tiled overlay on the image.
-    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-    imagealphablending($image_processed, true);
-    imagesettile($image_processed, $tiled_overlay);
-    imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
-    imagedestroy($tiled_overlay);
-
-    // Save the images.
-    $image_filenames = array();
-    foreach ($this->image_types as $image_type) {
-
-      // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
-      }
-
-      // Process the filename & generate the image files.
-      $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && !file_exists($filename)) {
-        imagegif($image_processed, $filename, $this->image_quality['gif']);
-      }
-      else if ($image_type == 'jpeg' && !file_exists($filename)) {
-        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
-      }
-      else if ($image_type == 'png' && !file_exists($filename)) {
-        imagepng($image_processed, $filename, $this->image_quality['png']);
-
-      }
-    }
-
-    imagedestroy($image_processed);
-
-  } // pixelate_image_NO_LONGER_USED
 
 
   // Generate the pixel boxes.
