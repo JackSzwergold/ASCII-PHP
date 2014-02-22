@@ -10,6 +10,7 @@
  *          2014-02-19, js: development & cleanup
  *          2014-02-20, js: refactoring into a real class.
  *          2014-02-21, js: adding more options for flexibilty.
+ *          2014-02-22, js: fixing the way character set flipping works.
  *
  */
 
@@ -123,7 +124,8 @@ $asciiArtClass = new asciiArtClass();
 $asciiArtClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
 $asciiArtClass->debug_mode(FALSE);
 $asciiArtClass->flip_horizontal(FALSE);
-$asciiArtClass->set_character_sets(TRUE, TRUE);
+$asciiArtClass->flip_character_set(TRUE);
+$asciiArtClass->set_character_sets(TRUE);
 $asciiArtClass->set_ascii_vertical_compensation(2);
 $final_ascii = $asciiArtClass->process_image();
 

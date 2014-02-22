@@ -10,6 +10,7 @@
  *          2014-02-19, js: development & cleanup
  *          2014-02-20, js: refactoring into a real class.
  *          2014-02-21, js: adding more options for flexibilty.
+ *          2014-02-22, js: fixing the way character set flipping works.
  *
  */
 
@@ -22,8 +23,8 @@ class asciiArtClass {
 
   private $image_file = FALSE;
 
-  private $height_resampled = 46;
-  private $width_resampled = 46;
+  private $height_resampled = 80;
+  private $width_resampled = 80;
 
   private $block_size_x = 10;
   private $block_size_y = 10;
@@ -44,7 +45,7 @@ class asciiArtClass {
   private $character_set = NULL;
   private $character_set_count = 0;
   private $character_set_shuffle = FALSE;
-  private $character_set_reverse = FALSE;
+  private $character_set_flip = FALSE;
 
   private $ascii_vertical_compensation = 2;
 
@@ -91,6 +92,14 @@ class asciiArtClass {
 
 
   // Set the character sets.
+  function flip_character_set ($character_set_flip = FALSE) {
+    if ($character_set_flip) {
+      $this->character_set_flip = $character_set_flip;
+    }
+  } // flip_character_set
+
+
+  // Set the character sets.
   function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
 
     // Set the character set shuffle value.
@@ -126,10 +135,9 @@ class asciiArtClass {
       $this->character_set = $character_sets_short[3];
     }
 
-    if ($this->character_set_reverse) {
+    if ($this->character_set_flip) {
       $this->character_set = array_reverse($this->character_set);
     }
-
     $this->character_set_count = count($this->character_set);
 
   } // set_character_sets
