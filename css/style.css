@@ -82,6 +82,7 @@ ul, li
 	display: table-cell;
 	float: left;
 	vertical-align: middle padding: 0;
+	padding: 0;
 	margin: 0;
 	width: 7px;
 	height: 14px;
