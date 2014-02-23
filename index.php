@@ -140,7 +140,7 @@ $final_ascii = $ImageASCIIClass->process_image();
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass->setViewMode($mode);
-$frontendDisplayClass->setPageTitle('ascii art');
+$frontendDisplayClass->setPageTitle('image ascii');
 $frontendDisplayClass->setPageDescription('a dynamically generated ascii art image using php, the gd graphics libarary, html &amp; css.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($final_ascii);
