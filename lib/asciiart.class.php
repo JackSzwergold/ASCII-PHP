@@ -242,7 +242,9 @@ class asciiArtClass {
         // $blocks[] = $this->generate_pixel_boxes($pixel);
         $blocks[] = $this->generate_ascii_boxes($pixel);
       }
-      $blocks[] = $this->row_delimiter;
+      if (!empty($this->row_delimiter)) {
+        $blocks[] = $this->row_delimiter;
+      }
     }
 
     $ret = '';
@@ -437,8 +439,6 @@ class asciiArtClass {
         }
       }
     }
-
-
 
     imagedestroy($image_processed);
 
