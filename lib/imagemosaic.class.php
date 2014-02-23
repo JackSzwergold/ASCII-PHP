@@ -1,30 +1,33 @@
 <?php
 
 /**
- * ASCII Art Class (ascii_art.class.php)
+ * ImageMosaic Class (imagemosaic.class.php)
  *
  * Programming: Jack Szwergold <JackSzwergold@gmail.com>
  *
- * Created: 2014-02-19, js
- * Version: 2014-02-19, js: creation
- *          2014-02-19, js: development & cleanup
- *          2014-02-20, js: refactoring into a real class.
- *          2014-02-21, js: adding more options for flexibilty.
- *          2014-02-22, js: fixing the way character set flipping works.
+ * Created: 2014-01-11, js
+ * Version: 2014-01-11, js: creation
+ *          2014-01-11, js: development & cleanup
+ *          2014-01-12, js: more development & adding new sample images
+ *          2014-01-14, js: moving onto creating actual pixelated images.
+ *          2014-01-16, js: More improvements including actual image generation.
+ *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
+ *          2014-01-18, js: adjustments to allow for additional image orientations.
+ *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'
  *
  */
 
 //**************************************************************************************//
 // Here is where the magic happens!
 
-class asciiArtClass {
+class ImageMosaic {
 
   private $DEBUG_MODE = FALSE;
 
   private $image_file = FALSE;
 
-  private $height_resampled = 80;
-  private $width_resampled = 80;
+  private $height_resampled = 46;
+  private $width_resampled = 46;
 
   private $block_size_x = 10;
   private $block_size_y = 10;
@@ -594,6 +597,6 @@ class asciiArtClass {
   } // renderImage
 
 
-} // asciiArtClass
+} // ImageMosaic
 
 ?>
