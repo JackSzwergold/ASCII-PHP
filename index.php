@@ -11,6 +11,8 @@
  *          2014-02-20, js: refactoring into a real class.
  *          2014-02-21, js: adding more options for flexibilty.
  *          2014-02-22, js: fixing the way character set flipping works.
+ *          2014-02-23, js: renaming the class to Image ASCII.
+ *          2014-02-23, js: setting ImageASCII as an extension of ImageMosaic.
  *
  */
 
@@ -19,7 +21,7 @@
 
 require_once('common/functions.inc.php');
 require_once 'lib/frontendDisplay.class.php';
-require_once('lib/asciiart.class.php');
+require_once('lib/imageascii.class.php');
 
 //**************************************************************************************//
 // Define the valid arrays.
@@ -118,20 +120,20 @@ $image_files = array_slice($raw_image_files, 0, 1);
 $image_file = $image_files[0];
 
 //**************************************************************************************//
-// Instantialize the 'asciiArtClass()'.
+// Instantialize the 'ImageASCIIClass()'.
 
-$asciiArtClass = new asciiArtClass();
-$asciiArtClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
-$asciiArtClass->debug_mode(FALSE);
-$asciiArtClass->row_flip_horizontal(FALSE);
-$asciiArtClass->set_row_delimiter('<br />');
-$asciiArtClass->set_generate_images(FALSE);
-$asciiArtClass->set_overlay_image(FALSE);
-$asciiArtClass->flip_character_set(TRUE);
-$asciiArtClass->set_character_sets(TRUE);
-$asciiArtClass->set_ascii_vertical_compensation(2);
-$asciiArtClass->process_ascii(TRUE);
-$final_ascii = $asciiArtClass->process_image();
+$ImageASCIIClass = new ImageASCII();
+$ImageASCIIClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+$ImageASCIIClass->debug_mode(FALSE);
+$ImageASCIIClass->row_flip_horizontal(FALSE);
+$ImageASCIIClass->set_row_delimiter('<br />');
+$ImageASCIIClass->set_generate_images(FALSE);
+$ImageASCIIClass->set_overlay_image(FALSE);
+$ImageASCIIClass->flip_character_set(TRUE);
+$ImageASCIIClass->set_character_sets(TRUE);
+$ImageASCIIClass->set_ascii_vertical_compensation(2);
+$ImageASCIIClass->process_ascii(TRUE);
+$final_ascii = $ImageASCIIClass->process_image();
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
