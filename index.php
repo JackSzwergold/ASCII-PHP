@@ -127,6 +127,7 @@ $asciiArtClass->row_flip_horizontal(FALSE);
 $asciiArtClass->flip_character_set(TRUE);
 $asciiArtClass->set_character_sets(TRUE);
 $asciiArtClass->set_ascii_vertical_compensation(2);
+$asciiArtClass->process_ascii(TRUE);
 $final_ascii = $asciiArtClass->process_image();
 
 //**************************************************************************************//

@@ -51,6 +51,7 @@ class asciiArtClass {
   private $character_set_flip = FALSE;
 
   private $ascii_vertical_compensation = 2;
+  private $process_ascii = FALSE;
 
   private $saturation_value = 255;
   private $saturation_multiplier = 3;
@@ -83,6 +84,14 @@ class asciiArtClass {
     $this->block_size_y = $block_size;
 
   } // set_image
+
+
+  // Set the ascii vertical compensation.
+  function process_ascii ($process_ascii = null) {
+    if (!empty($process_ascii)) {
+      $this->process_ascii = $process_ascii;
+    }
+  } // process_ascii
 
 
   // Set the ascii vertical compensation.
@@ -239,8 +248,12 @@ class asciiArtClass {
         $pixel_row = array_reverse($pixel_row);
       }
       foreach ($pixel_row as $pixel) {
-        // $blocks[] = $this->generate_pixel_boxes($pixel);
-        $blocks[] = $this->generate_ascii_boxes($pixel);
+        if (!$this->process_ascii) {
+          $blocks[] = $this->generate_pixel_boxes($pixel);
+        }
+        else {
+          $blocks[] = $this->generate_ascii_boxes($pixel);
+        }
       }
       if (!empty($this->row_delimiter)) {
         $blocks[] = $this->row_delimiter;
@@ -249,8 +262,12 @@ class asciiArtClass {
 
     $ret = '';
     if (!empty($blocks)) {
-      // $ret = $this->render_pixel_box_container($blocks);
-      $ret =  sprintf('<pre>%s</pre>', implode('', $blocks)); // Foo!
+      if (!$this->process_ascii) {
+        $ret = $this->render_pixel_box_container($blocks);
+      }
+      else {
+        $ret =  sprintf('<pre>%s</pre>', implode('', $blocks));
+      }
     }
 
     return $ret;
