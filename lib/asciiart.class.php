@@ -29,9 +29,12 @@ class asciiArtClass {
   private $block_size_x = 10;
   private $block_size_y = 10;
 
-  private $overlay_tile = 'css/brick.png';
+  private $generate_images = FALSE;
+  private $overlay_image = FALSE;
+  private $overlay_tile_file = 'css/brick.png';
 
-  private $flip_horizontal = FALSE;
+  private $row_flip_horizontal = FALSE;
+  private $row_delimiter = '<br />';
   private $php_version_imageflip = 5.5;
   private $orientation = 'square';
 
@@ -64,11 +67,11 @@ class asciiArtClass {
   } // debug_mode
 
 
-  public function flip_horizontal($flip_horizontal) {
+  public function row_flip_horizontal($row_flip_horizontal) {
     if (version_compare(phpversion(), $this->php_version_imageflip, '>')) {
-      $this->flip_horizontal = $flip_horizontal;
+      $this->row_flip_horizontal = $row_flip_horizontal;
     }
-  } // flip_horizontal
+  } // row_flip_horizontal
 
 
   public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
@@ -181,7 +184,7 @@ class asciiArtClass {
     // $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
     $ret_array[] = $this->block_size_x;
     $ret_array[] = $this->block_size_y;
-    $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
+    $ret_array[] = $this->row_flip_horizontal ? 'h_flip' : '';
 
     $ret_array = array_filter($ret_array);
 
@@ -232,14 +235,14 @@ class asciiArtClass {
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_array as $pixel_row) {
-      if ($this->flip_horizontal) {
+      if ($this->row_flip_horizontal) {
         $pixel_row = array_reverse($pixel_row);
       }
       foreach ($pixel_row as $pixel) {
         // $blocks[] = $this->generate_pixel_boxes($pixel);
         $blocks[] = $this->generate_ascii_boxes($pixel);
       }
-      $blocks[] = '<br />'; // Foo!
+      $blocks[] = $this->row_delimiter;
     }
 
     $ret = '';
@@ -390,7 +393,7 @@ class asciiArtClass {
     }
 
     // Place a tiled overlay on the image.
-    if ($this->flip_horizontal) {
+    if ($this->row_flip_horizontal) {
       imageflip($image_processed, IMG_FLIP_HORIZONTAL);
     }
 
@@ -401,18 +404,18 @@ class asciiArtClass {
       imageconvolution($image_processed, $blur_matrix, 16, 0);
     }
 
-    if (FALSE) { // Foo!
-      // Place a tiled overlay on the image.
-      $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-      imagealphablending($image_processed, true);
-      imagesettile($image_processed, $tiled_overlay);
-      imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
-      imagedestroy($tiled_overlay);
-    }
+    // Process the filename & save the image files.
+    if ($this->generate_images) { // Foo!
 
-    // Save the images.
-    // Process the filename & generate the image files.
-    if (FALSE) { // Foo!
+      if ($this->overlay_image) {
+        // Place a tiled overlay on the image.
+        $tiled_overlay = imagecreatefrompng($this->overlay_tile_file);
+        imagealphablending($image_processed, true);
+        imagesettile($image_processed, $tiled_overlay);
+        imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
+        imagedestroy($tiled_overlay);
+      }
+
       $image_filenames = array();
       foreach ($this->image_types as $image_type) {
 
@@ -434,6 +437,8 @@ class asciiArtClass {
         }
       }
     }
+
+
 
     imagedestroy($image_processed);
 
