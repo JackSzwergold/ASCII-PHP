@@ -239,13 +239,13 @@ class asciiArtClass {
         // $blocks[] = $this->generate_pixel_boxes($pixel);
         $blocks[] = $this->generate_ascii_boxes($pixel);
       }
-      $blocks[] = '<br />';
+      $blocks[] = '<br />'; // Foo!
     }
 
     $ret = '';
     if (!empty($blocks)) {
       // $ret = $this->render_pixel_box_container($blocks);
-      $ret =  sprintf('<pre>%s</pre>', implode('', $blocks));
+      $ret =  sprintf('<pre>%s</pre>', implode('', $blocks)); // Foo!
     }
 
     return $ret;
@@ -401,7 +401,7 @@ class asciiArtClass {
       imageconvolution($image_processed, $blur_matrix, 16, 0);
     }
 
-    if (FALSE) {
+    if (FALSE) { // Foo!
       // Place a tiled overlay on the image.
       $tiled_overlay = imagecreatefrompng($this->overlay_tile);
       imagealphablending($image_processed, true);
@@ -412,7 +412,7 @@ class asciiArtClass {
 
     // Save the images.
     // Process the filename & generate the image files.
-    if (FALSE) {
+    if (FALSE) { // Foo!
       $image_filenames = array();
       foreach ($this->image_types as $image_type) {
 
