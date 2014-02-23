@@ -1,6 +1,6 @@
 require 'capistrano/ext/multistage'
 set :stages, ['staging', 'production']
-set :application, "ascii_art"
+set :application, "image_ascii"
 set :repository,  "git@github.com:JackSzwergold/ImageASCII-Class .git"
 set :git_enable_submodules, true
 
