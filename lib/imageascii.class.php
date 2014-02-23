@@ -90,6 +90,7 @@ class ImageASCII extends ImageMosaic {
     $character_sets_short[] = str_split("#%$*|:.' ");
     $character_sets_short[] = str_split("@%#*+=-:. ");
     $character_sets_short[] = str_split("@#8&o:*. ");
+    $character_sets_short[] = str_split("@#&+. ");
     $character_sets_short[] = str_split("#&+. ");
     
     // $character_sets = array_merge($character_sets_short, $character_sets_long);
