@@ -126,7 +126,7 @@ $ImageASCIIClass = new ImageASCII();
 $ImageASCIIClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
 $ImageASCIIClass->debug_mode(FALSE);
 $ImageASCIIClass->row_flip_horizontal(FALSE);
-$ImageASCIIClass->set_row_delimiter(PHP_EOL);
+$ImageASCIIClass->set_row_delimiter('<br />');
 $ImageASCIIClass->set_generate_images(FALSE);
 $ImageASCIIClass->set_overlay_image(FALSE);
 $ImageASCIIClass->flip_character_set(TRUE);

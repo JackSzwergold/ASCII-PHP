@@ -130,18 +130,24 @@ class ImageASCII extends ImageMosaic {
     // Get the character key.
     $character_key = intval($saturation * ($this->character_set_count - 1));
 
-    // Setting the ASCII art character.
-    // $ret = sprintf('<div>%s</div>', htmlentities($this->character_set[$character_key]));
-    $ret = sprintf('<span>%s</span>', htmlentities($this->character_set[$character_key]));
+    // Setting the ASCII character in a box.
+    $character = htmlentities($this->character_set[$character_key]);
+    $character = sprintf('<span class="PixelBox">%s</span><!-- .PixelBox -->', $character);
 
-    return $ret;
+    return $character;
 
   } // generate_pixel_boxes
 
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
-    $ret = sprintf('<pre>%s</pre>', implode('', $blocks));
+    $ret = ''
+         . '<div class="PixelBoxContainer">' . "\r\n"
+         . '<pre>' . "\r\n"
+         . sprintf('%s', implode('', $blocks))
+         . '</pre>' . "\r\n"
+         . '</div><!-- .PixelBoxContainer -->' . "\r\n"
+         ;
 
     return $ret;
 
