@@ -13,7 +13,8 @@
  *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *          2014-01-18, js: adjustments to allow for additional image orientations.
- *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'
+ *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'.
+ *          2014-02-25, js: reworking the cache manager.
  *
  */
 
@@ -190,9 +191,24 @@ class ImageMosaic {
 
     $ret = FALSE;
 
-    if (!empty($json_filename) && !empty($pixel_array)) {
+    // If the '$json_filename' value is empty.
+    if (empty($json_filename)) {
+      return $ret;
+    }
 
-      // echo $json_filename . ' <b>Not Cached</b><br />';
+    // Set the basic time values.
+    $modified_time = filemtime($json_filename);
+    $current_time = time();
+
+    // Calculate the time difference in minutes.
+    $diff_time_minutes = ($current_time - $modified_time) / 60;
+
+    // Set the booleans for file expired.
+    $expiration_in_minutes = 5;
+    $file_expired = ($diff_time_minutes > $expiration_in_minutes);
+    $file_exists = file_exists($json_filename);
+
+    if (!empty($pixel_array)) {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
@@ -210,9 +226,11 @@ class ImageMosaic {
       fclose($file_handle);
 
     }
-    else if (!empty($json_filename) && file_exists($json_filename)) {
-      // echo $json_filename . ' <b>Yes! Cached!</b><br />';
+    else if ($file_exists) {
+
+      // Return the JSON from the file.
       $ret = json_decode(file_get_contents($json_filename), TRUE);
+
     }
 
     return $ret;
