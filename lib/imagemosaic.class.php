@@ -197,16 +197,18 @@ class ImageMosaic {
       return $ret;
     }
 
+    // Set the boolean for file exists.
+    $file_exists = file_exists($json_filename);
+
     // Set the basic time values.
-    $modified_time = filemtime($json_filename);
+    $modified_time = $file_exists ? filemtime($json_filename) : 0;
     $current_time = time();
 
     // Calculate the time difference in minutes.
     $diff_time_minutes = (($current_time - $modified_time) / 60);
 
-    // Set the booleans for file expired.
+    // Set the boolean for file expired.
     $file_expired = ($diff_time_minutes > $this->cache_expiration_in_minutes);
-    $file_exists = file_exists($json_filename);
 
     if ($file_expired || !empty($pixel_array)) {
 
