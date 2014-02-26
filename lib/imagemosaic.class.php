@@ -48,6 +48,7 @@ class ImageMosaic {
   public $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
   public $image_types = array('gif', 'jpeg', 'png');
   public $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
+  public $cache_expiration_in_minutes = 60;
 
   public function __construct() {
   } // __construct
@@ -201,14 +202,13 @@ class ImageMosaic {
     $current_time = time();
 
     // Calculate the time difference in minutes.
-    $diff_time_minutes = ($current_time - $modified_time) / 60;
+    $diff_time_minutes = (($current_time - $modified_time) / 60);
 
     // Set the booleans for file expired.
-    $expiration_in_minutes = 5;
-    $file_expired = ($diff_time_minutes > $expiration_in_minutes);
+    $file_expired = ($diff_time_minutes > $this->cache_expiration_in_minutes);
     $file_exists = file_exists($json_filename);
 
-    if (!empty($pixel_array)) {
+    if ($file_expired || !empty($pixel_array)) {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
