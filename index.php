@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ASCII Art Class (ascii_art.class.php)
+ * Image ASCII Class (imageascii.class.php)
  *
  * Programming: Jack Szwergold <JackSzwergold@gmail.com>
  *
@@ -140,10 +140,10 @@ $final_ascii = $ImageASCIIClass->process_image();
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass->setViewMode($mode);
-$frontendDisplayClass->setPageTitle('image ascii');
+$frontendDisplayClass->setPageTitle('Image ASCII');
 $frontendDisplayClass->setPageURL('http://www.preworn.com/ascii/');
-$frontendDisplayClass->setPageCopyright('(c) copyright ' . date('Y') . ' jack szwergold. all rights reserved.');
-$frontendDisplayClass->setPageDescription('a dynamically generated ascii art image using php, the gd graphics libarary, html &amp; css.');
+$frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Szwergold. All rights reserved.');
+$frontendDisplayClass->setPageDescription('A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($final_ascii);
 // $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
