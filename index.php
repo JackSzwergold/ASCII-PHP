@@ -127,6 +127,22 @@ $image_files = array_slice($raw_image_files, 0, 1);
 $image_file = $image_files[0];
 
 //**************************************************************************************//
+// Set the page DIVs array.
+
+$page_divs_array = array();
+$page_divs_array[] = 'Wrapper';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Content';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Section';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Middle';
+$page_divs_array[] = 'Core';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Grid';
+$page_divs_array[] = 'Padding';
+
+//**************************************************************************************//
 // Instantialize the 'ImageASCIIClass()'.
 
 $ImageASCIIClass = new ImageASCII();
@@ -140,7 +156,7 @@ $ImageASCIIClass->flip_character_set(TRUE);
 $ImageASCIIClass->set_character_sets(TRUE);
 $ImageASCIIClass->set_ascii_vertical_compensation(2);
 $ImageASCIIClass->process_ascii(TRUE);
-$final_ascii = $ImageASCIIClass->process_image();
+$body = $ImageASCIIClass->process_image();
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
@@ -152,7 +168,8 @@ $frontendDisplayClass->setPageURL('http://www.preworn.com/ascii/');
 $frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.');
 $frontendDisplayClass->setPageDescription('A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
-$frontendDisplayClass->setPageContent($final_ascii);
+$frontendDisplayClass->setPageContent($body);
+$frontendDisplayClass->setPageDivs($page_divs_array);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 // $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
