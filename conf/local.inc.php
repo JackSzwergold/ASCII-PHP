@@ -19,10 +19,10 @@
  */
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-  define('BASE_PATH', '/ImageMosaic-Class/');
+  define('BASE_PATH', '/ImageASCII-Class/');
 }
 else {
-  define('BASE_PATH', '/art/mosaic/');
+  define('BASE_PATH', '/art/ascii/');
 }
 
 /**************************************************************************************************/
