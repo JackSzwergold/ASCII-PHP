@@ -29,8 +29,6 @@
 require_once 'conf/conf.inc.php';
 require_once BASE_FILEPATH . '/common/functions.inc.php';
 require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
-// require_once BASE_FILEPATH . '/lib/Parsedown.php';
-// require_once BASE_FILEPATH . '/lib/processimage.class.php';
 require_once BASE_FILEPATH . '/lib/imageascii.class.php';
 
 //**************************************************************************************//
