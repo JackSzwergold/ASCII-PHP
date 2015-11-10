@@ -26,9 +26,12 @@
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
 
-require_once('common/functions.inc.php');
-require_once 'lib/frontendDisplay.class.php';
-require_once('lib/imageascii.class.php');
+require_once 'conf/conf.inc.php';
+require_once BASE_FILEPATH . '/common/functions.inc.php';
+require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
+// require_once BASE_FILEPATH . '/lib/Parsedown.php';
+// require_once BASE_FILEPATH . '/lib/processimage.class.php';
+require_once BASE_FILEPATH . 'lib/imageascii.class.php';
 
 //**************************************************************************************//
 // Define the valid arrays.
@@ -163,15 +166,17 @@ $body = $ImageASCIIClass->process_image();
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass->setViewMode($mode);
-$frontendDisplayClass->setPageTitle('Image ASCII');
-$frontendDisplayClass->setPageURL('http://www.preworn.com/ascii/');
-$frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.');
-$frontendDisplayClass->setPageDescription('A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.');
+$frontendDisplayClass->setPageTitle($SITE_TITLE);
+$frontendDisplayClass->setPageURL($SITE_URL);
+$frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
+$frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($body);
 $frontendDisplayClass->setPageDivs($page_divs_array);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
-// $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
-$frontendDisplayClass->setPageRobots('noindex, nofollow');
+// $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
+$frontendDisplayClass->setPageRobots($SITE_ROBOTS);
 $frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();
+
+?>
