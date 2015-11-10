@@ -144,6 +144,10 @@ $ImageASCIIClass->process_ascii(TRUE);
 $body = $ImageASCIIClass->process_image();
 
 //**************************************************************************************//
+// Set the page base.
+$page_base = BASE_URL;
+
+//**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
@@ -159,6 +163,10 @@ $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 // $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
 $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
 $frontendDisplayClass->setJavascripts($JAVASCRIPTS_ARRAY);
+$frontendDisplayClass->setPageBase($page_base);
+// $frontendDisplayClass->setPageURLParts($markdown_parts);
+// $frontendDisplayClass->setAmazonInfo($AMAZON_INFO);
+// $frontendDisplayClass->setPayPalInfo($PAYPAL_INFO);
 $frontendDisplayClass->initContent();
 
 ?>
