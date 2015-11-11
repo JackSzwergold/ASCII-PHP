@@ -121,8 +121,4 @@ $ImageASCIIClass->set_ascii_vertical_compensation(2);
 $ImageASCIIClass->process_ascii(TRUE);
 $body = $ImageASCIIClass->process_image();
 
-//**************************************************************************************//
-// Set the page base.
-$page_base = BASE_URL;
-
 ?>
