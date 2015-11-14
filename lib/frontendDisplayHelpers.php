@@ -59,10 +59,10 @@ $mode_options['mega']['how_many'] = 1;
 if (FALSE) {
   $mode_keys = array_keys($mode_options);
   shuffle($mode_keys);
-  $mode = $mode_keys[0];
+  $VIEW_MODE = $mode_keys[0];
 }
 else {
-  $mode = 'large';
+  $VIEW_MODE = 'large';
 }
 
 //**************************************************************************************//
@@ -109,7 +109,7 @@ $image_file = $image_files[0];
 // Instantialize the 'ImageASCIIClass()'.
 
 $ImageASCIIClass = new ImageASCII();
-$ImageASCIIClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+$ImageASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
 $ImageASCIIClass->debug_mode(FALSE);
 $ImageASCIIClass->row_flip_horizontal(FALSE);
 $ImageASCIIClass->set_row_delimiter('<br />');
