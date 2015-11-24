@@ -129,9 +129,9 @@ class ImageASCII extends ImageMosaic {
 
     // Calculate saturation.
     $rgb_sat = array();
-    $rgb_sat['red'] = ($rgb_array['red'] / ($this->saturation_value * $this->saturation_multiplier));
-    $rgb_sat['green'] = ($rgb_array['green'] / ($this->saturation_value * $this->saturation_multiplier));
-    $rgb_sat['blue'] = ($rgb_array['blue'] / ($this->saturation_value * $this->saturation_multiplier));
+    $rgb_sat['red'] = ($rgb_array['rgba']['red'] / ($this->saturation_value * $this->saturation_multiplier));
+    $rgb_sat['green'] = ($rgb_array['rgba']['green'] / ($this->saturation_value * $this->saturation_multiplier));
+    $rgb_sat['blue'] = ($rgb_array['rgba']['blue'] / ($this->saturation_value * $this->saturation_multiplier));
     $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places);
 
     // Get the character key.
