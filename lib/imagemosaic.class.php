@@ -7,7 +7,7 @@
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
- * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>. 
+ * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
  *
  * w: http://www.preworn.com
  * e: me@preworn.com
@@ -134,6 +134,12 @@ class ImageMosaic {
   } // create_filename
 
 
+  // Get image file basename.
+  function get_file_basename ($filename = '') {
+    return preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($filename));
+  } // get_file_basename
+
+
   // Process the image.
   function process_image () {
 
@@ -146,9 +152,12 @@ class ImageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
-    $pixel_array = $this->cache_manager($json_filename);
+    $pixel_object_final = $this->cache_manager($json_filename);
 
-    // If the pixels array is empty, then we need to generate & cache the data.
+    // Set the pixel object name.
+    $pixel_object_name = $this->get_file_basename($json_filename);
+
+   // If the pixels array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($pixel_array)) {
 
       // Ingest the source image for rendering.
@@ -163,17 +172,30 @@ class ImageMosaic {
       // Generate the pixels.
       $pixel_array = $this->generate_pixels($image_processed);
 
+      // Set the 'pixels' array.
+      $pixel_array_final = array('pixels' => $pixel_array);
+
+      // Create the pixel object.
+      $pixel_object = new stdClass();
+      $pixel_object->name = $pixel_object_name;
+
+      // Set the final pixel object with actual pixel data.
+      $pixel_object_final = array($pixel_object->name => $pixel_array_final);
+
       // Cache the pixels.
-      $this->cache_manager($json_filename, $pixel_array);
+      $this->cache_manager($json_filename, $pixel_object_final);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
     }
 
+    // Get the actual pixel array.
+    $pixel_array_final = $pixel_object_final[$pixel_object_name]['pixels'];
+
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_array as $pixel_row) {
+    foreach ($pixel_array_final as $pixel_row) {
       if ($this->row_flip_horizontal) {
         $pixel_row = array_reverse($pixel_row);
       }
@@ -316,10 +338,10 @@ class ImageMosaic {
   function pixelate_image_json ($json_filename) {
 
     // Load the JSON.
-    $pixel_array = $this->cache_manager($json_filename);
+    $pixel_object = $this->cache_manager($json_filename);
 
     // If the pixel array is empty, bail out of this function.
-    if (empty($pixel_array)) {
+    if (empty($pixel_object)) {
       return;
     }
 
@@ -335,12 +357,14 @@ class ImageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_array as $position_y => $pixel_row) {
-      $box_y = ($position_y * $this->block_size_y);
-      foreach ($pixel_row as  $position_x => $pixel) {
-        $box_x = ($position_x * $this->block_size_x);
-        $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+    foreach ($pixel_object as $pixel_array) {
+      foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+        $box_y = ($position_y * $this->block_size_y);
+        foreach ($pixel_row as  $position_x => $pixel) {
+          $box_x = ($position_x * $this->block_size_x);
+          $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
+          imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+        }
       }
     }
 
@@ -397,17 +421,16 @@ class ImageMosaic {
   // Generate the pixel boxes.
   function generate_pixel_boxes ($rgb_array) {
 
-    // $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
-    $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
-
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
     if (FALSE) {
+      $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array['rgba']));
       $block_rgb = sprintf('background-color: %s;', $rgb_final);
       $block_style = $block_dimensions . ' ' . $block_rgb;
     }
     else {
-      $block_hex = sprintf('background-color: %s;', $hex_final);
+      $hex_final = $this->rgb_to_hex($rgb_array['rgba']);
+      $block_hex = sprintf('background-color: #%s;',  $hex_final);
       $block_style = $block_dimensions . ' ' . $block_hex;
     }
 
@@ -418,6 +441,12 @@ class ImageMosaic {
     return $ret;
 
   } // generate_pixel_boxes
+
+
+  // Convert RGB values to .
+  function rgb_to_hex ($rgb_array) {
+    return sprintf("%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
+  } // rgb_to_hex
 
 
   // Generate the pixels.
@@ -448,7 +477,7 @@ class ImageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = $rgb_array;
+          $rows[] = array('hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
         }
         else {
           // $rows[] = $rgb_array;
