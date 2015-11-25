@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Image ASCII Class (imageascii.class.php) (c) by Jack Szwergold
+ * imageASCII Class (imageASCII.class.php) (c) by Jack Szwergold
  *
- * Image ASCII Class is licensed under a
+ * imageASCII Class is licensed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
@@ -26,12 +26,12 @@
 //**************************************************************************************//
 // The parent image mosaic class.
 
-require_once('imagemosaic.class.php');
+require_once('imageMosaic.class.php');
 
 //**************************************************************************************//
 // Here is where the magic happens!
 
-class ImageASCII extends ImageMosaic {
+class imageASCII extends imageMosaic {
 
   public $height_resampled = 80;
   public $width_resampled = 80;
@@ -161,6 +161,6 @@ class ImageASCII extends ImageMosaic {
   } // render_pixel_box_container
 
 
-} // ImageASCII
+} // imageASCII
 
 ?>

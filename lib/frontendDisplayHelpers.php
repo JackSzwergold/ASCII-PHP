@@ -21,7 +21,7 @@
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
 
-require_once BASE_FILEPATH . '/lib/imageascii.class.php';
+require_once BASE_FILEPATH . '/lib/imageASCII.class.php';
 
 //**************************************************************************************//
 // Set an array of mode options.
@@ -106,19 +106,19 @@ $image_files = array_slice($raw_image_files, 0, 1);
 $image_file = $image_files[0];
 
 //**************************************************************************************//
-// Instantialize the 'ImageASCIIClass()'.
+// Instantialize the 'imageASCIIClass()'.
 
-$ImageASCIIClass = new ImageASCII();
-$ImageASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-$ImageASCIIClass->debug_mode(FALSE);
-$ImageASCIIClass->row_flip_horizontal(FALSE);
-$ImageASCIIClass->set_row_delimiter('<br />');
-$ImageASCIIClass->set_generate_images(FALSE);
-$ImageASCIIClass->set_overlay_image(FALSE);
-$ImageASCIIClass->flip_character_set(TRUE);
-$ImageASCIIClass->set_character_sets(TRUE);
-$ImageASCIIClass->set_ascii_vertical_compensation(2);
-$ImageASCIIClass->process_ascii(TRUE);
-$body = $ImageASCIIClass->process_image();
+$imageASCIIClass = new imageASCII();
+$imageASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+$imageASCIIClass->debug_mode(FALSE);
+$imageASCIIClass->row_flip_horizontal(FALSE);
+$imageASCIIClass->set_row_delimiter('<br />');
+$imageASCIIClass->set_generate_images(FALSE);
+$imageASCIIClass->set_overlay_image(FALSE);
+$imageASCIIClass->flip_character_set(TRUE);
+$imageASCIIClass->set_character_sets(TRUE);
+$imageASCIIClass->set_ascii_vertical_compensation(2);
+$imageASCIIClass->process_ascii(TRUE);
+$body = $imageASCIIClass->process_image();
 
 ?>

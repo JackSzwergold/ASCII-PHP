@@ -33,7 +33,7 @@ else {
 }
 
 // Site descriptive info.
-$SITE_TITLE = 'Image ASCII';
+$SITE_TITLE = 'ASCII';
 $SITE_DESCRIPTION = 'A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.';
 $SITE_URL = 'http://www.preworn.com/ascii/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
