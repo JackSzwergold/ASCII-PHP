@@ -3,7 +3,7 @@ lock '3.4.0'
 
 set :application, 'image_ascii'
 set :short_name, 'ascii'
-set :repo_url, 'git@github.com:JackSzwergold/ImageASCII-Class.git'
+set :repo_url, 'git@github.com:JackSzwergold/imageASCII-PHP-Class.git'
 
 # Set the 'deploy_to' directory.
 set :deploy_to, '/var/www'
