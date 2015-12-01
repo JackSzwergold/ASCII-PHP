@@ -157,7 +157,7 @@ class imageMosaic {
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
 
-   // If the pixels array is empty, then we need to generate & cache the data.
+    // If the pixels array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($pixel_array)) {
 
       // Ingest the source image for rendering.
@@ -173,15 +173,20 @@ class imageMosaic {
       $pixel_array = $this->generate_pixels($image_processed);
 
       // Set the 'pixels' array.
-      $pixel_array_final = array('pixels' => $pixel_array);
+      $pixel_array_final = array();
+      $pixel_array_final['name'] = $pixel_object_name;
+      $pixel_array_final['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
+      $pixel_array_final['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
+      $pixel_array_final['pixels'] = $pixel_array;
 
       // Create the pixel object.
-      $pixel_object = new stdClass();
-      $pixel_object->name = $pixel_object_name;
+      // $pixel_object = new stdClass();
+      // $pixel_object->name = $pixel_object_name;
 
       // Set the final pixel object with actual pixel data.
       // $pixel_object_final = array($pixel_object->name => $pixel_array_final);
-      $pixel_object_final = $pixel_array_final;
+      $pixel_object_final = array('images' => array($pixel_array_final));
+      // $pixel_object_final = $pixel_array_final;
 
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_object_final);
@@ -192,7 +197,8 @@ class imageMosaic {
     }
 
     // Get the actual pixel array.
-    $pixel_array_final = $pixel_object_final['pixels'];
+    // $pixel_array_final = $pixel_object_final['pixels'];
+    $pixel_array_final = $pixel_object_final['images'][0]['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -358,8 +364,8 @@ class imageMosaic {
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_object as $pixel_array) {
-      // foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-      foreach ($pixel_array as $position_y => $pixel_row) {
+      // foreach ($pixel_array as $position_y => $pixel_row) {
+      foreach ($pixel_array[0]['pixels'] as $position_y => $pixel_row) {
         $box_y = ($position_y * $this->block_size_y);
         foreach ($pixel_row as  $position_x => $pixel) {
           $box_x = ($position_x * $this->block_size_x);
@@ -478,7 +484,8 @@ class imageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = array('x' => $width, 'y' => $height, 'width' => $this->block_size_x, 'height' => $this->block_size_y, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          // $rows[] = array('x' => $width, 'y' => $height, 'width' => $this->block_size_x, 'height' => $this->block_size_y, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          $rows[] = array('x' => $width, 'y' => $height, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
           $order++;
         }
         else {

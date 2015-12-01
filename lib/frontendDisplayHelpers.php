@@ -113,7 +113,7 @@ $imageASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mo
 $imageASCIIClass->debug_mode(FALSE);
 $imageASCIIClass->row_flip_horizontal(FALSE);
 $imageASCIIClass->set_row_delimiter('<br />');
-$imageASCIIClass->set_generate_images(FALSE);
+$imageASCIIClass->set_generate_images(TRUE);
 $imageASCIIClass->set_overlay_image(FALSE);
 $imageASCIIClass->flip_character_set(TRUE);
 $imageASCIIClass->set_character_sets(TRUE);
