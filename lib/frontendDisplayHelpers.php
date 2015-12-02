@@ -80,7 +80,7 @@ if (!is_dir($image_dir)) {
 //**************************************************************************************//
 // Process the images in the directory.
 
-$skip_files = array('..', '.', '.DS_Store','ignore');
+$skip_files = array('..', '.', '.DS_Store', 'ignore');
 $image_files = scandir($image_dir);
 $image_files = array_diff($image_files, $skip_files);
 
@@ -105,6 +105,9 @@ $image_files = array_slice($raw_image_files, 0, 1);
 
 $image_file = $image_files[0];
 
+// Init the items array.
+$items = array();
+
 //**************************************************************************************//
 // Instantialize the 'imageASCIIClass()'.
 
@@ -119,6 +122,16 @@ $imageASCIIClass->flip_character_set(TRUE);
 $imageASCIIClass->set_character_sets(TRUE);
 $imageASCIIClass->set_ascii_vertical_compensation(2);
 $imageASCIIClass->process_ascii(TRUE);
-$body = $imageASCIIClass->process_image();
+
+// Set the options for the image processing.
+$processed_image = $imageASCIIClass->process_image();
+
+// Set the body content.
+// $body_content = join('', $processed_image['blocks']);
+$body_content = $processed_image['blocks'];
+
+// Set the JSON content.
+// $json_content = join('', $processed_image['json']);
+$json_content = $processed_image['json'];
 
 ?>

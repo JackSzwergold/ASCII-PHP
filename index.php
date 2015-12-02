@@ -50,7 +50,7 @@ $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
-$frontendDisplayClass->setPageContent($body);
+$frontendDisplayClass->setPageContent($body_content);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 // $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
