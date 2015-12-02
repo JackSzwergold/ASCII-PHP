@@ -190,7 +190,7 @@ class imageMosaic {
       $image_array = (array) $images_object;
 
       // Cache the pixels.
-      $this->cache_manager($json_filename, $images_object);
+      $raw_json = $this->cache_manager($json_filename, $images_object);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
@@ -227,18 +227,15 @@ class imageMosaic {
   // Manage caching.
   function cache_manager ($json_filename, $pixel_array = null) {
 
-    $ret = FALSE;
+    $json_content = '';
 
     // If the '$json_filename' value is empty.
     if (empty($json_filename)) {
-      return $ret;
+      return $json_content;
     }
 
-    // Set the boolean for file exists.
-    $file_exists = file_exists($json_filename);
-
     // Set the basic time values.
-    $modified_time = $file_exists ? filemtime($json_filename) : 0;
+    $modified_time = file_exists($json_filename) ? filemtime($json_filename) : 0;
     $current_time = time();
 
     // Calculate the time difference in minutes.
@@ -254,23 +251,25 @@ class imageMosaic {
         mkdir($this->cache_path['json'], $this->directory_permissions, true);
       }
 
-      // Cache the pixel blocks to a JSON file.
-      $file_handle = fopen($json_filename, 'w');
+      // Process the JSON content.
       $json_content = json_encode((object) $pixel_array);
       $json_content = str_replace('\/','/', $json_content);
       $json_content = prettyPrint($json_content);
+
+      // Cache the pixel blocks to a JSON file.
+      $file_handle = fopen($json_filename, 'w');
       fwrite($file_handle, $json_content);
       fclose($file_handle);
 
     }
-    else if ($file_exists) {
+    else if (file_exists($json_filename)) {
 
       // Return the JSON from the file.
-      $ret = file_get_contents($json_filename);
+      $json_content = file_get_contents($json_filename);
 
     }
 
-    return $ret;
+    return $json_content;
 
   } // cache_manager
 
