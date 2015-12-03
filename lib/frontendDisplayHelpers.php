@@ -21,7 +21,7 @@
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
 
-require_once BASE_FILEPATH . '/lib/imageASCII.class.php';
+require_once BASE_FILEPATH . '/lib/ASCII.class.php';
 
 //**************************************************************************************//
 // Set an array of mode options.

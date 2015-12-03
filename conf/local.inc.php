@@ -26,7 +26,7 @@ $DEBUG_OUTPUT_JSON = false;
 
 // Set the base URL path.
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-  define('BASE_PATH', '/imageASCII-PHP-Class/');
+  define('BASE_PATH', '/ASCII-PHP/');
 }
 else {
   define('BASE_PATH', '/art/ascii/');

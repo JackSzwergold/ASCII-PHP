@@ -1,9 +1,9 @@
 <?php
 
 /**
- * imageASCII Class (imageASCII.class.php) (c) by Jack Szwergold
+ * ASCII Class (ASCII.class.php) (c) by Jack Szwergold
  *
- * imageASCII Class is licensed under a
+ * ASCII Class is licensed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
@@ -26,7 +26,7 @@
 //**************************************************************************************//
 // The parent image mosaic class.
 
-require_once('imageMosaic.class.php');
+require_once('Mosaic.class.php');
 
 //**************************************************************************************//
 // Here is where the magic happens!
