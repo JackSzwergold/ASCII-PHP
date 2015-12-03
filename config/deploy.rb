@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'image_ascii'
+set :application, 'ascii'
 set :short_name, 'ascii'
 set :repo_url, 'git@github.com:JackSzwergold/imageASCII-PHP-Class.git'
 
