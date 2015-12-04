@@ -109,29 +109,35 @@ $image_file = $image_files[0];
 $items = array();
 
 //**************************************************************************************//
-// Instantialize the 'imageASCIIClass()'.
+// Instantialize the 'ASCIIClass()'.
 
-$imageASCIIClass = new imageASCII();
-$imageASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-$imageASCIIClass->debug_mode(FALSE);
-$imageASCIIClass->row_flip_horizontal(FALSE);
-$imageASCIIClass->set_row_delimiter('<br />');
-$imageASCIIClass->set_generate_images(TRUE);
-$imageASCIIClass->set_overlay_image(FALSE);
-$imageASCIIClass->flip_character_set(TRUE);
-$imageASCIIClass->set_character_sets(TRUE);
-$imageASCIIClass->set_ascii_vertical_compensation(2);
-$imageASCIIClass->process_ascii(TRUE);
+$ASCIIClass = new imageASCII();
+$ASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+$ASCIIClass->debug_mode(FALSE);
+$ASCIIClass->row_flip_horizontal(FALSE);
+$ASCIIClass->set_row_delimiter('<br />');
+$ASCIIClass->set_generate_images(TRUE);
+$ASCIIClass->set_overlay_image(FALSE);
+$ASCIIClass->flip_character_set(TRUE);
+$ASCIIClass->set_character_sets(TRUE);
+$ASCIIClass->set_ascii_vertical_compensation(2);
+$ASCIIClass->process_ascii(TRUE);
 
 // Set the options for the image processing.
-$processed_image = $imageASCIIClass->process_image();
+$processed_image = $ASCIIClass->process_image();
 
 // Set the body content.
 // $body_content = join('', $processed_image['blocks']);
 $body_content = $processed_image['blocks'];
 
 // Set the JSON content.
-// $json_content = join('', $processed_image['json']);
-$json_content = $processed_image['json'];
+$json_data = json_decode($processed_image['json']);
+
+// Now merge the JSON data object back into the parent image object.
+$image_object = $ASCIIClass->build_image_object($json_data);
+
+// Process the JSON content.
+$json_content = $ASCIIClass->json_encode_helper($image_object);
+
 
 ?>
