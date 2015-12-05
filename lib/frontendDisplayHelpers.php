@@ -101,43 +101,73 @@ shuffle($raw_image_files);
 //**************************************************************************************//
 // Slice off a subset of the image files.
 
-$image_files = array_slice($raw_image_files, 0, 1);
+$image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_many']);
 
-$image_file = $image_files[0];
+//**************************************************************************************//
+// Init the class and roll through the images.
+
+$ASCIIClass = new imageASCII();
 
 // Init the items array.
 $items = array();
 
+// Loop through the image files array.
+foreach ($image_files as $image_file) {
+
+  // Set the options for the image processing.
+  $ASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+  $ASCIIClass->debug_mode(FALSE);
+  $ASCIIClass->row_flip_horizontal(FALSE);
+  $ASCIIClass->set_row_delimiter('<br />');
+  $ASCIIClass->set_generate_images(TRUE);
+  $ASCIIClass->set_overlay_image(FALSE);
+  $ASCIIClass->flip_character_set(TRUE);
+  $ASCIIClass->set_character_sets(TRUE);
+  $ASCIIClass->set_ascii_vertical_compensation(2);
+  $ASCIIClass->process_ascii(TRUE);
+
+  // Process the image and add it to the items array.
+  $processed_image = $ASCIIClass->process_image();
+  $items[$image_file]['blocks'] = $processed_image['blocks'];
+  $items[$image_file]['json'] = $processed_image['json'];
+
+} // foreach
+
 //**************************************************************************************//
-// Instantialize the 'ASCIIClass()'.
+// Use 'array_filter' to filter out the empty images.
 
-$ASCIIClass = new imageASCII();
-$ASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-$ASCIIClass->debug_mode(FALSE);
-$ASCIIClass->row_flip_horizontal(FALSE);
-$ASCIIClass->set_row_delimiter('<br />');
-$ASCIIClass->set_generate_images(TRUE);
-$ASCIIClass->set_overlay_image(FALSE);
-$ASCIIClass->flip_character_set(TRUE);
-$ASCIIClass->set_character_sets(TRUE);
-$ASCIIClass->set_ascii_vertical_compensation(2);
-$ASCIIClass->process_ascii(TRUE);
+$items = array_filter($items);
 
-// Set the options for the image processing.
-$processed_image = $ASCIIClass->process_image();
+//**************************************************************************************//
+// Place the images in <li> tags.
+
+// Init the image item and related json array.
+$image_item_array = $image_json_array = array();
+
+// Loop through the artworks array.
+foreach ($items as $file => $image) {
+
+  // Set the image item array value.
+  $image_item_array[$file] = sprintf('%s', $image['blocks']);
+
+  // Set the image json array value.
+  $image_json_array[$file] = $image['json'];
+
+} // foreach
 
 // Set the body content.
-// $body_content = join('', $processed_image['blocks']);
-$body_content = $processed_image['blocks'];
+$body_content = sprintf('%s', implode('', $image_item_array));
 
-// Set the JSON content.
-$json_data = json_decode($processed_image['json']);
+// Convert the JSON back to an object.
+$json_data_array = array();
+foreach ($image_json_array as  $image_json_value) {
+  $json_data_array[] = json_decode($image_json_value);
+}
 
 // Now merge the JSON data object back into the parent image object.
-$image_object = $ASCIIClass->build_image_object($json_data);
+$image_object = $ASCIIClass->build_image_object($json_data_array);
 
 // Process the JSON content.
 $json_content = $ASCIIClass->json_encode_helper($image_object);
-
 
 ?>
