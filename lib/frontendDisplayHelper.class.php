@@ -28,7 +28,7 @@ require_once BASE_FILEPATH . '/lib/ASCII.class.php';
 
 class frontendDisplayHelper {
 
-  public function init($VIEW_MODE = 'large') {
+  public function init($VIEW_MODE = 'large', $page_base, $page_base_suffix = '') {
 
     //**************************************************************************************//
     // Set an array of mode options.
@@ -39,26 +39,36 @@ class frontendDisplayHelper {
     $mode_options['micro']['height'] = 20;
     $mode_options['micro']['block_size'] = 10;
     $mode_options['micro']['how_many'] = 1;
+    $mode_options['micro']['block_display'] = 1;
+    $mode_options['micro']['json_display'] = 1;
 
     $mode_options['tiny']['width'] = 40;
     $mode_options['tiny']['height'] = 40;
     $mode_options['tiny']['block_size'] = 10;
     $mode_options['tiny']['how_many'] = 1;
+    $mode_options['tiny']['block_display'] = 1;
+    $mode_options['tiny']['json_display'] = 1;
 
     $mode_options['small']['width'] = 60;
     $mode_options['small']['height'] = 60;
     $mode_options['small']['block_size'] = 10;
     $mode_options['small']['how_many'] = 1;
+    $mode_options['small']['block_display'] = 1;
+    $mode_options['small']['json_display'] = 1;
 
     $mode_options['large']['width'] = 80;
     $mode_options['large']['height'] = 80;
     $mode_options['large']['block_size'] = 10;
     $mode_options['large']['how_many'] = 1;
+    $mode_options['large']['block_display'] = 1;
+    $mode_options['large']['json_display'] = 1;
 
     $mode_options['mega']['width'] = 132;
     $mode_options['mega']['height'] = 132;
     $mode_options['mega']['block_size'] = 10;
     $mode_options['mega']['how_many'] = 1;
+    $mode_options['mega']['block_display'] = 1;
+    $mode_options['mega']['json_display'] = 1;
 
     //**************************************************************************************//
     // Set the view mode.
@@ -113,7 +123,7 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Init the class and roll through the images.
 
-    $ASCIIClass = new imageASCII();
+    $ProcessingClass = new imageASCII();
 
     // Init the items array.
     $items = array();
@@ -122,19 +132,19 @@ class frontendDisplayHelper {
     foreach ($image_files as $image_file) {
 
       // Set the options for the image processing.
-      $ASCIIClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-      $ASCIIClass->debug_mode(FALSE);
-      $ASCIIClass->row_flip_horizontal(FALSE);
-      $ASCIIClass->set_row_delimiter('<br />');
-      $ASCIIClass->set_generate_images(TRUE);
-      $ASCIIClass->set_overlay_image(FALSE);
-      $ASCIIClass->flip_character_set(TRUE);
-      $ASCIIClass->set_character_sets(TRUE);
-      $ASCIIClass->set_ascii_vertical_compensation(2);
-      $ASCIIClass->process_ascii(TRUE);
+      $ProcessingClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+      $ProcessingClass->debug_mode(FALSE);
+      $ProcessingClass->row_flip_horizontal(FALSE);
+      $ProcessingClass->set_row_delimiter('<br />');
+      $ProcessingClass->set_generate_images(TRUE);
+      $ProcessingClass->set_overlay_image(FALSE);
+      $ProcessingClass->flip_character_set(TRUE);
+      $ProcessingClass->set_character_sets(TRUE);
+      $ProcessingClass->set_ascii_vertical_compensation(2);
+      $ProcessingClass->process_ascii(TRUE);
 
       // Process the image and add it to the items array.
-      $processed_image = $ASCIIClass->process_image();
+      $processed_image = $ProcessingClass->process_image();
       $items[$image_file]['blocks'] = $processed_image['blocks'];
       $items[$image_file]['json'] = $processed_image['json'];
 
@@ -151,14 +161,24 @@ class frontendDisplayHelper {
     // Init the image item and related json array.
     $image_item_array = $image_json_array = array();
 
+    // Init the counter value.
+    $count = 0;
+
     // Loop through the artworks array.
     foreach ($items as $file => $image) {
 
       // Set the image item array value.
-      $image_item_array[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
+      if ($count < $mode_options[$VIEW_MODE]['block_display']) {
+        $image_item_array[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
+      }
 
       // Set the image json array value.
-      $image_json_array[$file] = $image['json'];
+      if ($count < $mode_options[$VIEW_MODE]['json_display']) {
+        $image_json_array[$file] = $image['json'];
+      }
+
+      // Increment the counter.
+      $count++;
 
     } // foreach
 
@@ -172,10 +192,10 @@ class frontendDisplayHelper {
     }
 
     // Now merge the JSON data object back into the parent image object.
-    $image_object = $ASCIIClass->build_image_object($json_data_array);
+    $image_object = $ProcessingClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
-    $json_content = $ASCIIClass->json_encode_helper($image_object);
+    $json_content = $ProcessingClass->json_encode_helper($image_object, FALSE);
 
     return array($VIEW_MODE, $body_content, $json_content);
 

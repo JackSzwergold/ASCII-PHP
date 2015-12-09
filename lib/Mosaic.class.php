@@ -240,26 +240,39 @@ class imageMosaic {
 
 
   // Build the image object.
-  function build_image_object ($image_object_array) {
+  function build_image_object ($image_object_array, $page_base, $page_base_suffix, $extra_endpoints) {
 
     // Create the data JSON object.
-    $ret = new stdClass();
-    $ret->links = array('self' => BASE_URL);
+    $parent_obj = new stdClass();
+
+    // Set the endpoints.
+    $endpoints = array('self' => $page_base . $page_base_suffix);
+    foreach ($extra_endpoints as $endpoint_key => $endpoint_value) {
+      $endpoints[$endpoint_value] = BASE_URL . $endpoint_value . '/' . $page_base_suffix;
+    }
+
+    // Add the endpoints to the object.
+    $parent_obj->links = $endpoints;
 
     // Set the image data array to the image object.
-    $ret->data = $image_object_array;
+    $child_obj = new stdClass();
+    $child_obj->type = 'images';
+    $child_obj->attributes = $image_object_array;
+    $parent_obj->data = $child_obj;
 
-    return $ret;
+    return $parent_obj;
 
   } // build_image_object
 
 
   // JSON encoding helper.
-  function json_encode_helper ($data) {
+  function json_encode_helper ($data, $pretty_print = FALSE) {
 
     $ret = json_encode((object) $data);
     $ret = str_replace('\/','/', $ret);
-    // $ret = prettyPrint($ret);
+    if ($pretty_print) {
+      $ret = prettyPrint($ret);
+    }
 
     return $ret;
 
@@ -294,7 +307,7 @@ class imageMosaic {
       }
 
       // Process the JSON content.
-      $json_content = $this->json_encode_helper($pixel_array);
+      $json_content = $this->json_encode_helper($pixel_array, FALSE);
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
