@@ -61,15 +61,17 @@ list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->in
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
-$frontendDisplayClass = new frontendDisplay(FALSE, FALSE);
-// if (array_key_exists('json', $params) && !empty($params['json']) && $params['controller'] == 'json') {
+$frontendDisplayClass = new frontendDisplay();
 if (array_key_exists('json', $params)) {
-  // $frontendDisplayClass->setContentType('application/vnd.api+json');
   $frontendDisplayClass->setContentType('application/json');
   $frontendDisplayClass->setPageContentJSON($json_content);
+  $frontendDisplayClass->setJSONMode(TRUE);
 }
 else {
   $frontendDisplayClass->setContentType('text/html');
+}
+if (array_key_exists('_debug', $params)) {
+  $frontendDisplayClass->setDebugMode(TRUE);
 }
 $frontendDisplayClass->setCharset('utf-8');
 $frontendDisplayClass->setViewMode($VIEW_MODE);
@@ -77,7 +79,6 @@ $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
-// $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($body_content);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
@@ -87,8 +88,6 @@ $frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
 $frontendDisplayClass->setCSSItems($CSS_ITEMS);
 $frontendDisplayClass->setFaviconItems($FAVICONS);
 $frontendDisplayClass->setPageBase($page_base . $page_base_suffix);
-// $frontendDisplayClass->setPageURLParts($markdown_parts);
-// $frontendDisplayClass->setPaymentInfo($PAYMENT_INFO);
 $frontendDisplayClass->initContent();
 
 ?>
