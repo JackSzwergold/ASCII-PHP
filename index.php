@@ -38,6 +38,16 @@ $contentCreationClass = new contentCreation();
 list($params, $page_title, $markdown_file) = $contentCreationClass->init();
 
 //**************************************************************************************//
+// Set the debug mode value.
+
+$DEBUG_MODE = array_key_exists('_debug', $params);
+
+//**************************************************************************************//
+// Set the JSON mode value.
+
+$JSON_MODE = array_key_exists('json', $params);
+
+//**************************************************************************************//
 // Set the page base.
 
 $page_base = BASE_URL;
@@ -50,36 +60,29 @@ if (array_key_exists('controller', $params) && !empty($params['controller']) && 
 //**************************************************************************************//
 // Set the query suffix to the page base.
 
-$page_base_suffix = array_key_exists('json', $params) ? '?json' : '';
+$page_base_suffix = $JSON_MODE ? '?json' : '';
 
 //**************************************************************************************//
 // Fetch the values out of the frontend display helper.
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
-list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix);
+list($VIEW_MODE, $html_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix, $DEBUG_MODE);
 
 //**************************************************************************************//
-// Init the "frontendDisplay()" class.
+// Init the front end display class and set other things.
 
 $frontendDisplayClass = new frontendDisplay();
-if (array_key_exists('json', $params)) {
-  $frontendDisplayClass->setContentType('application/json');
-  $frontendDisplayClass->setPageContentJSON($json_content);
-  $frontendDisplayClass->setJSONMode(TRUE);
-}
-else {
-  $frontendDisplayClass->setContentType('text/html');
-}
-if (array_key_exists('_debug', $params)) {
-  $frontendDisplayClass->setDebugMode(TRUE);
-}
+$frontendDisplayClass->setPageJSONContent($json_content);
+$frontendDisplayClass->setJSONMode($JSON_MODE);
+$frontendDisplayClass->setDebugMode($DEBUG_MODE);
+$frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));
 $frontendDisplayClass->setCharset('utf-8');
 $frontendDisplayClass->setViewMode($VIEW_MODE);
 $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
-$frontendDisplayClass->setPageContent($body_content);
+$frontendDisplayClass->setPageContent($html_content);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 // $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
