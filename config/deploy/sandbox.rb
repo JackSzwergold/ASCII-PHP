@@ -1,5 +1,5 @@
 # Set the github branch that will be used for this deployment.
-set :branch, "develop"
+set :branch, "master"
 
 # The details of the destination server you will be deploying to.
 server 'sandbox.local', user: ENV["CAP_USER"] || 'vagrant', roles: %w{app db web}, my_property: :my_value
@@ -26,14 +26,14 @@ namespace :deploy do
   task :create_symlink do
     on roles(:app) do
 
-        info "If there is no directory & no symbolic link to 'site/art' then create a directory named 'site/art'."
-        execute "cd #{fetch(:live_root)} && if [ ! -d site/art ]; then if [ ! -h site/art ]; then mkdir ./site/art; fi; fi"
+      info "If there is no directory & no symbolic link to 'site/art' then create a directory named 'site/art'."
+      execute "cd #{fetch(:live_root)} && if [ ! -d site/art ]; then if [ ! -h site/art ]; then mkdir ./site/art; fi; fi"
 
-        info "If there is a symbolic link to 'site/art' then create a symbolic link called 'site/art'."
-        execute "cd #{fetch(:live_root)} && if [ ! -h site/art ]; then if [ ! -d site/art ]; then ln -sf #{current_path} ./site/art; fi; fi"
+      info "If there is a symbolic link to 'site/art' then create a symbolic link called 'site/art'."
+      execute "cd #{fetch(:live_root)} && if [ ! -h site/art ]; then if [ ! -d site/art ]; then ln -sf #{current_path} ./site/art; fi; fi"
 
-        info "If there is a symbolic link to 'site/art/#{fetch(:short_name)}', delete it. Irregardless, create a new symbolic link to 'site/art/#{fetch(:short_name)}'."
-        execute "cd #{fetch(:live_root)} && if [ -h site/art/#{fetch(:short_name)} ]; then rm site/art/#{fetch(:short_name)}; fi && ln -sf #{current_path} ./site/art/#{fetch(:short_name)}"
+      info "If there is a symbolic link to 'site/art/#{fetch(:short_name)}', delete it. Irregardless, create a new symbolic link to 'site/art/#{fetch(:short_name)}'."
+      execute "cd #{fetch(:live_root)} && if [ -h site/art/#{fetch(:short_name)} ]; then rm site/art/#{fetch(:short_name)}; fi && ln -sf #{current_path} ./site/art/#{fetch(:short_name)}"
 
     end
   end
