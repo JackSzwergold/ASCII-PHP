@@ -78,6 +78,122 @@ ul, li
 /**************************************************************************************************/
 .Core .Text .Padding { padding: 15px 0 15px 0; }
 
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+html { font-size: 9pt; }
+
+body
+{
+	z-index: 0;
+	position: relative;
+	font-family: Arial, "Arial Unicode MS", Helvetica, Verdana, sans-serif;
+	font-size: 100%;
+	line-height: 1.2em;
+	text-align: center;
+	-webkit-text-size-adjust: 100%;
+}
+
+html, body
+{
+	width: 100%;
+	height: 100%;
+	color: #000;
+	background-color: #fff;
+}
+
+/**************************************************************************************************/
+a, a:visited, a:hover, a:active
+{
+	text-decoration: none;
+	color: #000;
+}
+
+ul, li { list-style: none; }
+:focus { -moz-outline-style: none; }
+a { outline: none; }
+
+hr
+{
+	border: 0;
+	height: 1px;
+	margin: 0.75em 0 1.5em 0;
+	background-color: #000;
+	clear: both;
+}
+
+/**************************************************************************************************/
+.Padding,
+.PixelBoxWrapper,
+.PixelBox,
+.PixelBoxContainer,
+ul, li
+{
+	position: relative;
+	float: left;
+	display: inline;
+}
+
+/**************************************************************************************************/
+.Wrapper
+{
+	height: 100%;
+	margin: 0 auto 0 auto;
+	padding: 0;
+	clear: both;
+	text-align: left;
+}
+
+.Wrapper
+{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+	margin: 0;
+	padding: 10px;
+}
+
+/**************************************************************************************************/
+.microView,
+.tinyView,
+.smallView,
+.largeView,
+.megaView
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/**************************************************************************************************/
+.Core { text-align: left; }
+
+/**************************************************************************************************/
+.microView .Core { width: 186px; }
+.tinyView .Core { width: 326px; }
+.smallView .Core { width: 466px; }
+.largeView .Core { width: 606px; }
+.megaView .Core { width: 970px; }
+
+/**************************************************************************************************/
+.Core .Grid { }
+.Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
+
 /**************************************************************************************************/
 .PixelBoxContainer
 {

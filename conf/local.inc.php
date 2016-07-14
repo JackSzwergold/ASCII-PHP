@@ -136,24 +136,16 @@ amzn_assoc_default_category = "All";
 // Set the page DIVs array.
 $PAGE_DIVS_ARRAY = array();
 $PAGE_DIVS_ARRAY[] = 'Wrapper';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Content';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Section';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Middle';
 $PAGE_DIVS_ARRAY[] = 'Core';
-$PAGE_DIVS_ARRAY[] = 'Padding';
 $PAGE_DIVS_ARRAY[] = 'Grid';
-$PAGE_DIVS_ARRAY[] = 'Padding';
 
 // Set the JavaScript array.
 $JAVASCRIPTS_ITEMS = array();
-$JAVASCRIPTS_ITEMS[] = 'script/json2.js';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.js';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.map';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery.noconflict.js';
-$JAVASCRIPTS_ITEMS[] = 'script/common.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/json2.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.map';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery.noconflict.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/common.js';
 
 // Set the link items array.
 $LINK_ITEMS = array();
