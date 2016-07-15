@@ -28,7 +28,8 @@ require_once BASE_FILEPATH . '/lib/ASCII.class.php';
 
 class frontendDisplayHelper {
 
-  private $controller = '';
+  private $controller_default = '';
+  private $controller_select = '';
   private $page_base = '';
   private $page_base_suffix = '';
   private $page_title = '';
@@ -41,12 +42,21 @@ class frontendDisplayHelper {
   private $json_content = '';
 
   //**************************************************************************************//
-  // Set the controller.
-  public function setController ($value) {
+  // Set the default controller.
+  public function setDefaultController ($value) {
     if (!empty($value)) {
-      $this->controller = $value;
+      $this->controller_default = $value;
     }
-  } // setController
+  } // setDefaultController
+
+
+ //**************************************************************************************//
+  // Set the selected controller.
+  public function setSelectedController ($value) {
+    if (!empty($value)) {
+      $this->controller_select = $value;
+    }
+  } // setSelectedController
 
 
   //**************************************************************************************//
@@ -80,7 +90,7 @@ class frontendDisplayHelper {
 
     //**************************************************************************************//
 	// Set the view mode.
-	$this->VIEW_MODE = $this->controller;
+	$this->VIEW_MODE = $this->controller_select;
 
  	//**************************************************************************************//
 	// Set the debug mode.
