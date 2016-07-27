@@ -150,6 +150,23 @@ class frontendDisplayHelper {
   //**************************************************************************************//
   //**************************************************************************************//
   //**************************************************************************************//
+  // Filter the view mode.
+  public function filterViewMode ($mode = null, $mode_options) {
+
+    if (!empty($mode) && $mode == 'random') {
+      $mode_keys = array_keys($mode_options);
+      shuffle($mode_keys);
+      $mode = $mode_keys[0];
+    }
+    else if (!empty($mode) && !array_key_exists($mode, $mode_options)) {
+      $mode = $this->controller_default;
+    }
+
+    return $mode;
+
+  } // filterViewMode
+
+
   public function initContent ($DEBUG_MODE = FALSE) {
 
     //**************************************************************************************//
@@ -203,14 +220,7 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Set the view mode.
 
-    if (!empty($this->VIEW_MODE) && $this->VIEW_MODE == 'random') {
-      $mode_keys = array_keys($mode_options);
-      shuffle($mode_keys);
-      $this->VIEW_MODE = $mode_keys[0];
-    }
-    else if (!empty($this->VIEW_MODE) && !array_key_exists($this->VIEW_MODE, $mode_options)) {
-      $this->VIEW_MODE = 'small';
-    }
+    $this->VIEW_MODE = $this->filterViewMode($this->VIEW_MODE, $mode_options);
 
     //**************************************************************************************//
     // Set the image directory.
