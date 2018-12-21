@@ -7,4 +7,3 @@ require 'capistrano/deploy'
 # Include default SCM as Git
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
-
