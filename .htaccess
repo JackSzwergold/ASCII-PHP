@@ -13,8 +13,8 @@ Options +FollowSymlinks
 RewriteEngine on
 
 # Only rewrite if the directory or file doesn’t exist on the system.
-RewriteCond   %{REQUEST_FILENAME} !-d [NC]
-RewriteCond   %{REQUEST_FILENAME} !-f [NC]
+RewriteCond   %{REQUEST_FILENAME} !-d
+RewriteCond   %{REQUEST_FILENAME} !-f
 
 # Ignore these base directories.
 RewriteRule   ^(clients|art|projects|css|favicons|script)($|/) - [L]
