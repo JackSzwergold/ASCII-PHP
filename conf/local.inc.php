@@ -26,13 +26,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
   define('BASE_PATH', '/ASCII-PHP/');
 }
 else {
-  define('BASE_PATH', '/projects/ascii/');
+  define('BASE_PATH', '/projects_base/ascii/');
 }
 
 // Site descriptive info.
 $SITE_TITLE = 'ASCII';
 $SITE_DESCRIPTION = 'A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.';
-$SITE_URL = 'http://www.preworn.com/projects/ascii/';
+$SITE_URL = 'http://www.preworn.com/projects_base/ascii/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
 $SITE_LICENSE_CODE = 'CC-BY-NC-SA-4.0';
 $SITE_LICENSE = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC-BY-NC-SA-4.0)';
