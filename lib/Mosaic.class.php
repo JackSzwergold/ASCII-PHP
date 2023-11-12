@@ -462,7 +462,8 @@ class imageMosaic {
         // Process the filename & generate the image files.
         $filename = $this->create_filename($this->image_file, $image_type);
         if ($image_type == 'gif' && !file_exists($filename)) {
-          imagegif($image_processed, $filename, $this->image_quality['gif']);
+          // imagegif($image_processed, $filename, $this->image_quality['gif']);
+          imagegif($image_processed, $filename);
         }
         else if ($image_type == 'jpeg' && !file_exists($filename)) {
           imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
