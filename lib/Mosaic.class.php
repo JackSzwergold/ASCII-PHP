@@ -36,6 +36,9 @@ class imageMosaic {
 
   public $image_file = FALSE;
 
+  public $width_source = NULL;
+  public $height_source = NULL;
+
   public $height_resampled = 46;
   public $width_resampled = 46;
 

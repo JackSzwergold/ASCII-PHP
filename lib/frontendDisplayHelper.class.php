@@ -138,7 +138,7 @@ class frontendDisplayHelper {
   //**************************************************************************************//
   //**************************************************************************************//
   //**************************************************************************************//
-  private function filterViewMode ($mode = null, $mode_options) {
+  private function filterViewMode ($mode = null, $mode_options = null) {
     global $SITE_DEFAULT_CONTROLLER;
 
     if (!empty($mode) && $mode == 'random') {

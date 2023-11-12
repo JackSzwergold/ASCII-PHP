@@ -39,6 +39,7 @@ class frontendDisplay {
   private $content_type = 'text/html';
   private $charset = 'utf-8';
   private $doctype = 'html5';
+  private $favicons = FALSE;
 
   private $json_encode = FALSE;
   private $json_via_header = FALSE;
