@@ -25,12 +25,10 @@
 
 //**************************************************************************************//
 // The parent image mosaic class.
-
 require_once('Mosaic.class.php');
 
 //**************************************************************************************//
 // Here is where the magic happens!
-
 class imageASCII extends imageMosaic {
 
   public $height_resampled = 80;
