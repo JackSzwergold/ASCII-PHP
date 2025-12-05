@@ -126,11 +126,13 @@ class imageASCII extends imageMosaic {
   // Generate the ascii art boxes.
   function generate_pixel_boxes ($rgb_array) {
 
+    //**********************************************************************************//
     // Check if the image actually exists.
     if (empty($rgb_array)) {
       return;
-    }
+    } // if
 
+    //**********************************************************************************//
     // Calculate saturation.
     $rgb_sat = array();
     $rgb_sat['red'] = ($rgb_array['rgba']['red'] / ($this->saturation_value * $this->saturation_multiplier));
@@ -138,9 +140,11 @@ class imageASCII extends imageMosaic {
     $rgb_sat['blue'] = ($rgb_array['rgba']['blue'] / ($this->saturation_value * $this->saturation_multiplier));
     $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places);
 
+    //**********************************************************************************//
     // Get the character key.
     $character_key = intval($saturation * ($this->character_set_count - 1));
 
+    //**********************************************************************************//
     // Setting the ASCII character in a box.
     $character = htmlentities($this->character_set[$character_key]);
     $character = sprintf('<span class="PixelBox">%s</span><!-- .PixelBox -->', $character);
@@ -149,6 +153,7 @@ class imageASCII extends imageMosaic {
 
   } // generate_pixel_boxes
 
+  //************************************************************************************//
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
