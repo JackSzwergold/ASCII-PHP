@@ -50,7 +50,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Set to process ascii.
-  function process_ascii ($process_ascii = null) {
+  function process_ascii($process_ascii = null) {
     if (!empty($process_ascii)) {
       $this->process_ascii = $process_ascii;
     } // if
@@ -58,7 +58,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Set the ascii vertical compensation.
-  function set_ascii_vertical_compensation ($ascii_vertical_compensation = null) {
+  function set_ascii_vertical_compensation($ascii_vertical_compensation = null) {
     if (!empty($ascii_vertical_compensation)) {
       $this->ascii_vertical_compensation = $ascii_vertical_compensation;
       $this->height_resampled = $this->height_resampled / $this->ascii_vertical_compensation;
@@ -67,7 +67,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Set the character sets.
-  function flip_character_set ($character_set_flip = FALSE) {
+  function flip_character_set($character_set_flip = false) {
     if ($character_set_flip) {
       $this->character_set_flip = $character_set_flip;
     } // if
@@ -75,8 +75,9 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Set the character sets.
-  function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
+  function set_character_sets($character_set_shuffle = false, $character_set_reverse = false) {
 
+    //**********************************************************************************//
     // Set the character set shuffle value.
     if (!empty($character_set_shuffle)) {
       $this->character_set_shuffle = $character_set_shuffle;
@@ -124,7 +125,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Generate the ascii art boxes.
-  function generate_pixel_boxes ($rgb_array) {
+  function generate_pixel_boxes($rgb_array = array()) {
 
     //**********************************************************************************//
     // Check if the image actually exists.
@@ -167,7 +168,6 @@ class imageASCII extends imageMosaic {
     return $ret;
 
   } // render_pixel_box_container
-
 
 } // imageASCII
 
