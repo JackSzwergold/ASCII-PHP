@@ -48,50 +48,54 @@ class imageASCII extends imageMosaic {
   public $saturation_multiplier = 3;
   public $saturation_decimal_places = 4;
 
+  //************************************************************************************//
   // Set to process ascii.
   function process_ascii ($process_ascii = null) {
     if (!empty($process_ascii)) {
       $this->process_ascii = $process_ascii;
-    }
+    } // if
   } // process_ascii
 
-
+  //************************************************************************************//
   // Set the ascii vertical compensation.
   function set_ascii_vertical_compensation ($ascii_vertical_compensation = null) {
     if (!empty($ascii_vertical_compensation)) {
       $this->ascii_vertical_compensation = $ascii_vertical_compensation;
       $this->height_resampled = $this->height_resampled / $this->ascii_vertical_compensation;
-    }
+    } // if
   } // set_ascii_vertical_compensation
 
-
+  //************************************************************************************//
   // Set the character sets.
   function flip_character_set ($character_set_flip = FALSE) {
     if ($character_set_flip) {
       $this->character_set_flip = $character_set_flip;
-    }
+    } // if
   } // flip_character_set
 
-
+  //************************************************************************************//
   // Set the character sets.
   function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
 
     // Set the character set shuffle value.
     if (!empty($character_set_shuffle)) {
       $this->character_set_shuffle = $character_set_shuffle;
-    }
+    } // if
 
+    //**********************************************************************************//
     // Set the character set reverse value.
     if (!empty($character_set_reverse)) {
       $this->character_set_reverse = $character_set_reverse;
-    }
+    } // if
 
+    //**********************************************************************************//
     // Long character grayscale character sets.
     $character_sets_long = array();
     $character_sets_long[] = str_split("\$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ");
     $character_sets_long[] = str_split("@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz\$CIu23Jcfry%1v7l+it[] {}?j|()=~!-/<>\"^_';,:`. ");
     $character_sets_long[] = str_split("@#\$%&8BMW*mwqpdbkhaoQ0OZXYUJCLtfjzxnuvcr[]{}1()|/?Il!i><+_~-;,. ");
 
+    //**********************************************************************************//
     // Short character grayscale character sets.
     $character_sets_short = array();
     $character_sets_short[] = str_split("#%$*|:.' ");
@@ -106,19 +110,19 @@ class imageASCII extends imageMosaic {
     if ($this->character_set_shuffle) {
       shuffle($character_sets);
       $this->character_set = $character_sets[0];
-    }
+    } // if
     else {
       $this->character_set = $character_sets_short[3];
-    }
+    } // else
 
     if ($this->character_set_flip) {
       $this->character_set = array_reverse($this->character_set);
-    }
+    } // if
     $this->character_set_count = count($this->character_set);
 
   } // set_character_sets
 
-
+  //************************************************************************************//
   // Generate the ascii art boxes.
   function generate_pixel_boxes ($rgb_array) {
 
