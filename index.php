@@ -48,7 +48,6 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
 // Now deal with the front end display helper class related stuff.
-
 $frontendDisplayHelperClass = new frontendDisplayHelper();
 $frontendDisplayHelperClass->setController($controller);
 $frontendDisplayHelperClass->setPageBase($page_base);
@@ -64,7 +63,6 @@ $json_content = $frontendDisplayHelperClass->getJSONContent();
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
-
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setPageJSONContent($json_content);
 $frontendDisplayClass->setJSONMode($JSON_MODE);
@@ -92,12 +90,10 @@ $frontendDisplayClass->setAdBanner($AMAZON_RECOMMENDATION);
 
 //**************************************************************************************//
 // Init the core content and set the header and footer items.
-
 $frontendDisplayClass->initCoreContent();
 
 //**************************************************************************************//
 // Init and display the final content.
-
 $frontendDisplayClass->initHTMLContent();
 
 ?>
