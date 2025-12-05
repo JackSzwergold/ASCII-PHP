@@ -158,12 +158,13 @@ class imageASCII extends imageMosaic {
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
-    $ret = '<div class="PixelBoxContainer">' . "\r\n"
-         . '<pre>' . "\r\n"
-         . sprintf('%s', implode('', $blocks))
-         . '</pre>' . "\r\n"
-         . '</div><!-- .PixelBoxContainer -->' . "\r\n"
-         ;
+    $ret =
+        '<div class="PixelBoxContainer">' . "\r\n"
+      . '<pre>' . "\r\n"
+      . sprintf('%s', implode('', $blocks))
+      . '</pre>' . "\r\n"
+      . '</div><!-- .PixelBoxContainer -->' . "\r\n"
+      ;
 
     return $ret;
 
