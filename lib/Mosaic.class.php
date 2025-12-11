@@ -276,18 +276,22 @@ class imageMosaic {
   // Build the content object.
   public function build_content_object($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
 
+    //************************************************************************************//
     // Create the data JSON object.
     $parent_obj = new stdClass();
 
+    //************************************************************************************//
     // Set the endpoints.
     $endpoints = array('self' => $page_base . $page_base_suffix);
     foreach ($extra_endpoints as $endpoint_key => $endpoint_value) {
       $endpoints[$endpoint_value] = BASE_URL . $endpoint_value . '/' . $page_base_suffix;
-    }
+    } // foreach
 
+    //************************************************************************************//
     // Add the endpoints to the object.
     $parent_obj->links = $endpoints;
 
+    //************************************************************************************//
     // Set the image data array to the image object.
     $child_obj = new stdClass();
     $child_obj->type = $type;
