@@ -1,38 +1,41 @@
 <?php
 
-/**
- * Local Config File (local.inc.php) (c) by Jack Szwergold
- *
- * Local Config File is licensed under a
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
- *
- * You should have received a copy of the license along with this
- * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>. 
- *
- * w: https://www.szwergold.com
- * e: jackszwergold@icloud.com
- *
- * Created: 2014-02-16, js
- * Version: 2014-02-16, js: creation
- *          2014-02-16, js: development & cleanup
- *
- */
+/******************************************************************************/
+//   ____             __ _
+//  / ___|___  _ __  / _(_) __ _
+// | |   / _ \| '_ \| |_| |/ _` |
+// | |__| (_) | | | |  _| | (_| |
+//  \____\___/|_| |_|_| |_|\__, |
+//                         |___/
+//
+// The core, application specific config stuff.
+/******************************************************************************/
+
+/******************************************************************************/
+// Load the local config and bootstrap items.
+require_once('bootstrap.php');
+require_once('local.php');
+
+/******************************************************************************/
+// TODO: Generate a nonce if we are using metatag based Content-Security-Policy.
+// $NONCE = base64_encode(random_bytes(20));
+$NONCE = bin2hex(openssl_random_pseudo_bytes(32));
+
+/******************************************************************************/
+// Set the HTML templating options.
+// $TEMPLATE_FRAMEWORK = 'bootstrap-4.6';
+$TEMPLATE_FRAMEWORK = 'bootstrap-5.3';
 
 /**************************************************************************************************/
-// Define localized defaults.
+// Define the defaults.
+$VALID_CONTENT_TYPES = array('application/vnd.api+json', 'application/json','text/plain','text/html');
+$VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
 
-// Set the base URL path.
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
-  define('BASE_PATH', '/ASCII-PHP/');
-}
-else {
-  define('BASE_PATH', '/projects_base/ascii/');
-}
-
+/**************************************************************************************************/
 // Site descriptive info.
 $SITE_TITLE = 'ASCII';
 $SITE_DESCRIPTION = 'A dynamically generated ASCII art image using php, the GD graphics library, HTML &amp; CSS.';
-$SITE_URL = 'http://www.arsaurum.com/projects_base/ascii/';
+$SITE_URL = 'http://www.szwergold.com/projects/ascii/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
 $SITE_LICENSE_CODE = 'CC-BY-NC-SA-4.0';
 $SITE_LICENSE = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC-BY-NC-SA-4.0)';
@@ -43,6 +46,7 @@ $SITE_FB_ADMINS = '504768652';
 $SITE_KEYWORD = 'lexicon';
 $SITE_DEFAULT_CONTROLLER = 'large';
 
+/**************************************************************************************************/
 // Favicon info.
 $FAVICONS = array();
 $FAVICONS['standard']['rel'] = 'icon';
@@ -60,6 +64,7 @@ $FAVICONS['ipad']['rel'] = 'apple-touch-icon-precomposed';
 $FAVICONS['ipad']['sizes'] = '72x72';
 $FAVICONS['ipad']['href'] = 'favicons/apple-touch-icon-72x72-precomposed.png';
 
+/**************************************************************************************************/
 // Social media info.
 $SOCIAL_MEDIA_INFO = array();
 $SOCIAL_MEDIA_INFO['instagram']['short_name'] = 'Instagram';
@@ -67,21 +72,26 @@ $SOCIAL_MEDIA_INFO['instagram']['emoji'] = '📸';
 $SOCIAL_MEDIA_INFO['instagram']['url'] = 'https://www.instagram.com/jackszwergold/';
 $SOCIAL_MEDIA_INFO['instagram']['description'] = 'Check me out on Instagram.';
 
+/**************************************************************************************************/
 // Amazon recommendation banner.
 $AMAZON_RECOMMENDATION = '';
 
+/**************************************************************************************************/
 // Set the page DIVs array.
 $PAGE_DIVS_ARRAY = array();
 $PAGE_DIVS_ARRAY[] = 'Wrapper';
 $PAGE_DIVS_ARRAY[] = 'Core';
 $PAGE_DIVS_ARRAY[] = 'Grid';
 
+/**************************************************************************************************/
 // Set the page DIV wrapper.
 $PAGE_DIV_WRAPPER = 'PixelBoxWrapper';
 
+/**************************************************************************************************/
 // Set the JavaScript array.
 $JAVASCRIPTS_ITEMS = array();
 
+/**************************************************************************************************/
 // Set the link items array.
 $LINK_ITEMS = array();
 $LINK_ITEMS['style_css']['rel'] = 'stylesheet';
@@ -90,6 +100,7 @@ $LINK_ITEMS['style_css']['href'] = 'css/style.css';
 $LINK_ITEMS['author']['rel'] = 'author';
 $LINK_ITEMS['author']['href'] = 'https://plus.google.com/+JackSzwergold';
 
+/**************************************************************************************************/
 // Set the controller and parameter stuff.
 $VALID_CONTROLLERS = array('parent');
 $DISPLAY_CONTROLLERS = array('parent');
