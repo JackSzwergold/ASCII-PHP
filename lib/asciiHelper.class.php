@@ -29,7 +29,7 @@ require_once BASE_FILEPATH . '/lib/ASCII.class.php';
 //**************************************************************************************//
 // The beginnings of a front end display helper class.
 
-class frontendDisplayHelper {
+class asciiHelper {
 
   private $controller = '';
   private $page_base = '';
@@ -330,6 +330,6 @@ class frontendDisplayHelper {
   } // initContent
 
 
-} // frontendDisplayHelper
+} // asciiHelper
 
 ?>

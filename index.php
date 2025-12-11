@@ -27,7 +27,7 @@
 require_once('settings/conf.inc.php');
 require_once(BASE_FILEPATH . '/common/functions.inc.php');
 require_once(BASE_FILEPATH . '/lib/frontendDisplay.class.php');
-require_once(BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php');
+require_once(BASE_FILEPATH . '/lib/asciiHelper.class.php');
 require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
 
 //**************************************************************************************//
@@ -45,7 +45,7 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
 // Now deal with the front end display helper class related stuff.
-$frontendDisplayHelperClass = new frontendDisplayHelper();
+$frontendDisplayHelperClass = new asciiHelper();
 $frontendDisplayHelperClass->setController($controller);
 $frontendDisplayHelperClass->setPageBase($page_base);
 $frontendDisplayHelperClass->setPageBaseSuffix($page_query_string_append);
