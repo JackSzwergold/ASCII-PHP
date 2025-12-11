@@ -103,33 +103,35 @@ class imageMosaic {
     } // if
   } // set_image
 
+  //**************************************************************************************//
   // Set the generate images value.
-  function set_generate_images ($generate_images = null) {
+  public function set_generate_images($generate_images = null) {
     if (!empty($generate_images)) {
       $this->generate_images = $generate_images;
-    }
+    } // if
   } // set_generate_images
 
-
+  //**************************************************************************************//
   // Set the overlay image value.
-  function set_overlay_image ($overlay_image = null) {
+  public function set_overlay_image($overlay_image = null) {
     if (!empty($overlay_image)) {
       $this->overlay_image = $overlay_image;
-    }
+    } // if
   } // set_overlay_image
 
-
+  //**************************************************************************************//
   // Set the row delimiter.
-  function set_row_delimiter ($row_delimiter = null) {
+  public function set_row_delimiter($row_delimiter = null) {
     if (!empty($row_delimiter)) {
       $this->row_delimiter = $row_delimiter;
-    }
+    } // if
   } // set_row_delimiter
 
-
+  //**************************************************************************************//
   // Create the filename.
-  function create_filename ($filename = '', $extension = '') {
+  private function create_filename($filename = null, $extension = null) {
 
+    //***********************************************************************************//
     // Process the filename.
     $filepath_parts = pathinfo($filename);
 
@@ -149,12 +151,10 @@ class imageMosaic {
 
   } // create_filename
 
-
+  //**************************************************************************************//
   // Get image file basename.
-  function get_file_basename ($filename = '') {
-
+  function get_file_basename($filename = null) {
     return preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($filename));
-
   } // get_file_basename
 
 
