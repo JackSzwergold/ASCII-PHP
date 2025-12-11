@@ -540,7 +540,7 @@ class imageMosaic {
   //**************************************************************************************//
   // Generate the pixel boxes.
   // TODO: This is oddly different between this version and the main mosaic version.
-  function generate_pixel_boxes ($rgb_array) {
+  public function generate_pixel_boxes ($rgb_array = array()) {
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
@@ -625,7 +625,7 @@ class imageMosaic {
   //**************************************************************************************//
   // Render the pixel boxes into a container.
   // TODO: This is oddly different between this version and the main mosaic version.
-   function render_pixel_box_container($blocks = array()) {
+  public function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
     // $css_height = $this->height_resampled * $this->block_size_y;

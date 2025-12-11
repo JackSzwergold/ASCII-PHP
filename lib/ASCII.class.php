@@ -123,7 +123,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Generate the ascii art boxes.
-  function generate_pixel_boxes($rgb_array = array()) {
+  public function generate_pixel_boxes ($rgb_array = array()) {
 
     //**********************************************************************************//
     // Check if the image actually exists.
@@ -154,7 +154,7 @@ class imageASCII extends imageMosaic {
 
   //************************************************************************************//
   // Render the pixel boxes into a container.
-  function render_pixel_box_container ($blocks = array()) {
+  public function render_pixel_box_container ($blocks = array()) {
 
     $ret =
         '<div class="PixelBoxContainer">' . "\r\n"
