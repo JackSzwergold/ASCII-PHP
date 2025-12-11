@@ -166,15 +166,18 @@ class asciiHelper {
     // Loop through the artworks array.
     foreach ($items as $file => $image) {
 
+      //************************************************************************************//
       // Set the image item array value.
       if ($count < $mode_options[$this->VIEW_MODE]['block_display']) {
-        $image_item_array[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
-      }
-
-      // Set the image json array value.
-      if ($count < $mode_options[$this->VIEW_MODE]['json_display']) {
-        $image_json_array[$file] = $image['json'];
-      }
+        $image_item_array[$file] =
+            '<li>'
+          . '<div class="Padding">'
+          . $image['blocks']
+          . '</div><!-- .Padding -->'
+          . '</li>'
+          ;
+  
+      } // if
 
       // Increment the counter.
       $count++;
@@ -182,25 +185,16 @@ class asciiHelper {
     } // foreach
 
     //**************************************************************************************//
-    // Set the body content.
-    $this->html_content = sprintf('<ul>%s</ul>', implode('', $image_item_array));
+    // Set the return value.
+    $ret = 
+        '<ul>'
+      .  implode('', $image_item_array)
+      . '</ul>'
+      ;
 
     //**************************************************************************************//
-    // Convert the JSON back to an object.
-    $json_data_array = array();
-    foreach ($image_json_array as  $image_json_value) {
-      $json_data_array['content'][] = json_decode($image_json_value);
-    }
-    $json_data_array['count'] = count($json_data_array['content']);
-    $json_data_array['total'] = count($image_json_array);
-
-    //**************************************************************************************//
-    // Now merge the JSON data object back into the parent image object.
-    $image_object = $ProcessingClass->build_content_object($json_data_array, $this->page_base, $this->page_base_suffix, array_keys($mode_options), "images");
-
-    //**************************************************************************************//
-    // Process the JSON content.
-    $this->json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
+    // Set the return value.
+    return $ret;
 
   } // renderContent
 
