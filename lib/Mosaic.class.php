@@ -539,6 +539,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Generate the pixel boxes.
+  // TODO: This is what is different between this version and the main mosaic version.
   function generate_pixel_boxes ($rgb_array) {
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
@@ -639,9 +640,9 @@ class imageMosaic {
 
   } // render_pixel_box_container
 
-
+  //**************************************************************************************//
   // Render the image straight to the browser.
-  function render_image ($image_processed) {
+  private function render_image($image_processed = null) {
 
     // Set  the output header; in this case making it a JPEG.
     header('Content-Type: image/jpeg');
@@ -650,7 +651,6 @@ class imageMosaic {
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
-
 
 } // imageMosaic
 
