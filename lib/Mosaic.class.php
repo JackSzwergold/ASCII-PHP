@@ -256,10 +256,11 @@ class imageMosaic {
 
   } // process_image
 
-
+  //**************************************************************************************//
   // Build the image data object.
-  function build_image_data_object ($json_filename, $image_processed) {
+  private function build_image_data_object($json_filename = null, $image_processed = null) {
 
+    //************************************************************************************//
     // Build the object.
     $ret = array();
     $ret['name'] = $this->get_file_basename($json_filename);
@@ -271,9 +272,9 @@ class imageMosaic {
 
   } // build_image_data_object
 
-
+  //**************************************************************************************//
   // Build the content object.
-  function build_content_object ($content_object_array, $page_base, $page_base_suffix, $extra_endpoints, $type = 'undefined') {
+  public function build_content_object($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
 
     // Create the data JSON object.
     $parent_obj = new stdClass();
