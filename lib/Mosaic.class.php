@@ -157,78 +157,96 @@ class imageMosaic {
     return preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($filename));
   } // get_file_basename
 
-
+  //**************************************************************************************//
   // Process the image.
   function process_image () {
 
+    //************************************************************************************//
     // Check if the image actually exists.
     if (!file_exists($this->image_file)) {
       return;
-    }
+    } // if
 
+    //************************************************************************************//
     // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
+    //************************************************************************************//
     // Get the raw JSON content.
     $raw_json = $this->cache_manager($json_filename);
 
+    //************************************************************************************//
     // Check if the image JSON file actually exists.
     $image_array = json_decode($raw_json, TRUE);
 
+    //************************************************************************************//
     // If the pixel object array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($image_array)) {
 
+      //**********************************************************************************//
       // Ingest the source image for rendering.
       $image_source = imagecreatefromjpeg($this->image_file);
 
+      //**********************************************************************************//
       // Calculate the image ratio.
       $this->calculate_ratio($image_source);
 
+      //**********************************************************************************//
       // Resample the image.
       $image_processed = $this->resample_image($image_source);
 
+      //**********************************************************************************//
       // Set the image data array for the JSON object.
       $image_object_data = $this->build_image_data_object($json_filename, $image_processed);
 
+      //**********************************************************************************//
       // Build the image object.
       // $image_object = $this->build_image_object($image_object_data);
 
+      //**********************************************************************************//
       // Send the image object to the cache manager.
       $raw_json = $this->cache_manager($json_filename, $image_object_data);
 
+      //**********************************************************************************//
       // Pixelate the image via the JSON data.
       $this->generate_image_from_json($json_filename);
 
+      //**********************************************************************************//
       // Cast the image object as an array.
       $image_array = (array) $image_object_data;
 
-    }
+    } // if
 
+    //************************************************************************************//
     // Get the actual pixel array from the image object.
     $pixel_array_final = $image_array['pixels'];
 
+    //************************************************************************************//
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_array_final as $pixel_row) {
       if ($this->row_flip_horizontal) {
         $pixel_row = array_reverse($pixel_row);
-      }
+      } // if
       foreach ($pixel_row as $pixel) {
         $blocks[] = $this->generate_pixel_boxes($pixel);
-      }
+      } // foreach
       if (!empty($this->row_delimiter)) {
         $blocks[] = $this->row_delimiter;
-      }
-    }
+      } // if
+    } // foreach
 
+    //************************************************************************************//
     // Return the data.
     $ret = array();
 
+    //************************************************************************************//
     // If the blocks value isn’t empty, set that value in the output.
     if (!empty($blocks)) {
       $ret['blocks'] = $this->render_pixel_box_container($blocks);
     }
 
+    //************************************************************************************//
     // If the JSON value isn’t empty, set that value in the output.
     if (!empty($raw_json)) {
       $ret['json'] = $raw_json;
