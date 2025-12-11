@@ -198,10 +198,29 @@ class asciiHelper {
     // Now merge the JSON data object back into the parent image object.
     $image_object = $ProcessingClass->build_content_object($json_data_array, $this->page_base, $this->page_base_suffix, array_keys($mode_options), "images");
 
+    //**************************************************************************************//
     // Process the JSON content.
     $this->json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
 
   } // renderContent
+
+  //**************************************************************************************//
+  // Filter the view mode.
+  private function filterViewMode ($mode = null, $mode_options = null) {
+    global $SITE_DEFAULT_CONTROLLER;
+
+    if (!empty($mode) && $mode == 'random') {
+      $mode_keys = array_keys($mode_options);
+      shuffle($mode_keys);
+      $mode = $mode_keys[0];
+    } // if
+    else if (!empty($mode) && !array_key_exists($mode, $mode_options)) {
+      $mode = $SITE_DEFAULT_CONTROLLER;
+    } // else if
+
+    return $mode;
+
+  } // filterViewMode
 
 } // asciiHelper
 
