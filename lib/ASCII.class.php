@@ -158,7 +158,7 @@ class imageASCII extends imageMosaic {
 
     $ret =
         '<div class="PixelBoxContainer">' . "\r\n"
-      . '<pre>' . "\r\n"
+      . '<pre class="m-0 p-0">' . "\r\n"
       . sprintf('%s', implode('', $blocks))
       . '</pre>' . "\r\n"
       . '</div><!-- .PixelBoxContainer -->' . "\r\n"
