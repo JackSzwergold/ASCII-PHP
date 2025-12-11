@@ -417,21 +417,25 @@ class imageMosaic {
 
   } // calculate_ratio
 
-
+  //**************************************************************************************//
   // Resample the image.
-  function resample_image ($image_source = null) {
+  private function resample_image($image_source = null) {
 
+    //************************************************************************************//
     // Check if the image resource actually exists.
     if (empty($image_source)) {
       return;
-    }
+    } // if
 
+    //************************************************************************************//
     // Set the canvas for the processed image.
     $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
+    //************************************************************************************//
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
 
+    //************************************************************************************//
     // Get rid of the image to free up memory.
     imagedestroy($image_source);
 
@@ -462,14 +466,14 @@ class imageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-	foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-	  $box_y = ($position_y * $this->block_size_y);
-	  foreach ($pixel_row as  $position_x => $pixel) {
-	    $box_x = ($position_x * $this->block_size_x);
-	    $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
-	    imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-	  }
-	}
+  	foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+  	  $box_y = ($position_y * $this->block_size_y);
+  	  foreach ($pixel_row as  $position_x => $pixel) {
+  	    $box_x = ($position_x * $this->block_size_x);
+  	    $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
+  	    imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+  	  }
+  	}
 
 
     // Place a tiled overlay on the image.
