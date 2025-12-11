@@ -23,4 +23,3 @@
 $DEBUG_MODE = FALSE;
 
 ?>
-
