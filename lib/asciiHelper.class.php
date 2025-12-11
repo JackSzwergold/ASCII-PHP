@@ -135,7 +135,7 @@ class asciiHelper {
       $ProcessingClass->set_image($image_file, $mode_options[$this->VIEW_MODE]['width'], $mode_options[$this->VIEW_MODE]['height'], $mode_options[$this->VIEW_MODE]['block_size']);
       $ProcessingClass->debug_mode(FALSE);
       $ProcessingClass->row_flip_horizontal(FALSE);
-      $ProcessingClass->set_row_delimiter('<br />');
+      $ProcessingClass->set_row_delimiter('<br>');
       $ProcessingClass->set_generate_images(TRUE);
       $ProcessingClass->set_overlay_image(FALSE);
       $ProcessingClass->flip_character_set(TRUE);
