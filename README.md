@@ -1,4 +1,4 @@
 ASCII-PHP
 ==============
 
-A PHP class designed to generate pixelated mosaics from soutrce images. Data is stored in JSON format and output is rendered as colored DIVs.
+A PHP class designed to generate pixelated ASCII designs from source images. Data is stored in JSON format and output is rendered as ASCII characters.
